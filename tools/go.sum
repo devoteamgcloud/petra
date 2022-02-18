@@ -1,0 +1,4 @@
+github.com/golangci/golangci-lint v1.44.0 h1:YJPouGNQEdK+x2KsCpWMIBy0q6MSuxHjkWMxJMNj/DU=
+github.com/golangci/golangci-lint v1.44.0/go.mod h1:aBolpzNkmYogKPynGKdOWDCEc8LlwnxZC6w/SJ1TaEs=
+github.com/goreleaser/goreleaser v1.4.1 h1:gW8sdjDEo2H2ZgcJmWsNZUcaJSD4MLvA/bw7+GYQ8kU=
+github.com/goreleaser/goreleaser v1.4.1/go.mod h1:f808dxNXAnIgxWzIxOqPuB88P3oxQ2KnyM1Ff3XtCzA=
