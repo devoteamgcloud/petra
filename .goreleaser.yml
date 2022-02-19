@@ -15,6 +15,7 @@ archives:
     - goos: windows
       format: zip
 release:
+  github:
   prerelease: auto
 dockers:
   -
