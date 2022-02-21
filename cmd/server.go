@@ -36,13 +36,14 @@ func init() {
 }
 
 const (
+	envPrefix       = "PETRA"
 	prefixModules   = "/v1/modules"
-	prefixProviders = "/v1/modules"
+	prefixProviders = "/v1/providers"
 )
 
 func server() {
 	v := viper.New()
-	v.SetEnvPrefix("PETRA")
+	v.SetEnvPrefix(envPrefix)
 	v.AutomaticEnv()
 
 	r := chi.NewRouter()
@@ -56,6 +57,5 @@ func server() {
 
 	r.Route(prefixModules, module.Routing)
 	r.Route(prefixProviders, provider.Routing)
-
 	http.ListenAndServe(":"+flagListenAddr, r)
 }
