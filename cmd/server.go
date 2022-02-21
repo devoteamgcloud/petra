@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/arthur-laurentdka/petra/module"
+	"github.com/arthur-laurentdka/petra/provider"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/spf13/cobra"
@@ -53,7 +54,8 @@ func server() {
 
 	r.Use(middleware.Heartbeat("/is_alive"))
 
-	r.Route(prefixModules, module.ModuleRouting)
+	r.Route(prefixModules, module.Routing)
+	r.Route(prefixProviders, provider.Routing)
 
 	http.ListenAndServe(":"+flagListenAddr, r)
 }
