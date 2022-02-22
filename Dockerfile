@@ -4,9 +4,11 @@ ENV BASEDIR /go/src/github.com/arthur-laurentdka/petra
 
 WORKDIR ${BASEDIR}
 
-ADD . ${BASEDIR}
-
+COPY go.mod ./
+COPY go.sum ./
 RUN go mod download
+
+COPY . .
 
 RUN go build -o /go/bin/petra
 
