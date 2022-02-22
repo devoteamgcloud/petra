@@ -17,17 +17,18 @@ var rootCmd = &cobra.Command{
 	Use:   "petra",
 	Short: "private terraform registry",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		server()
+		if err := server(); err != nil {
+			return err
+		}
 		return nil
 	},
 }
 
-func Execute() error {
+func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	return nil
 }
 
 // Declare Flags.

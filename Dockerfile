@@ -6,7 +6,7 @@ WORKDIR ${BASEDIR}
 
 ADD . ${BASEDIR}
 
-RUN go install github.com/arthur-laurentdka/petra
+RUN go build -o /go/bin/petra
 
 FROM gcr.io/distroless/base:nonroot
 
