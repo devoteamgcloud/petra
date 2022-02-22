@@ -1,20 +1,18 @@
 FROM golang:1.17-alpine AS build
 
-ENV BASEDIR /go/src/github.com/arthur-laurentdka/petra
+WORKDIR /build
 
-WORKDIR ${BASEDIR}
-
-COPY go.mod ./
-COPY go.sum ./
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
 
 COPY . .
 
-RUN go build -o /go/bin/petra
+RUN go build -o /petra
 
 FROM gcr.io/distroless/base:nonroot
-
-COPY --from=build /go/bin/petra /
-
+WORKDIR /
+COPY --from=build /petra /petra
+USER nonroot:nonroot
 EXPOSE 3000
 ENTRYPOINT [ "/petra" ]
