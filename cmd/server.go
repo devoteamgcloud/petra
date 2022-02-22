@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/arthur-laurentdka/petra/module"
 	"github.com/arthur-laurentdka/petra/provider"
@@ -21,7 +23,11 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() error {
-	return rootCmd.Execute()
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	return nil
 }
 
 // Declare Flags.
@@ -41,7 +47,7 @@ const (
 	prefixProviders = "/v1/providers"
 )
 
-func server() {
+func server() error {
 	v := viper.New()
 	v.SetEnvPrefix(envPrefix)
 	v.AutomaticEnv()
@@ -57,5 +63,12 @@ func server() {
 
 	r.Route(prefixModules, module.Routing)
 	r.Route(prefixProviders, provider.Routing)
-	http.ListenAndServe(":"+flagListenAddr, r)
+
+	if err := http.ListenAndServe(":"+flagListenAddr, r); err != nil {
+		if err != http.ErrServerClosed {
+			return err
+		}
+	}
+
+	return nil
 }
