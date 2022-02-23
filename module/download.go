@@ -19,6 +19,7 @@ func getDownloadURL(w http.ResponseWriter, r *http.Request) {
 	downloadURL, err := gcsBucket.getModule(mod, ctx)
 	if err != nil {
 		// TODO add error handler
+		fmt.Fprintln(os.Stderr, err)
 	}
 
 	w.Header().Set("X-Terraform-Get", downloadURL)
