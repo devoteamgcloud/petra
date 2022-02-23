@@ -39,6 +39,7 @@ func InitGCSBackend(bckt string) error {
 	}
 	if err != nil {
 		// Other error to handle
+		fmt.Fprintln(os.Stderr, err)
 	}
 	fmt.Println("The", gcsBucket.bucket, "bucket exists and has attributes:", attrs)
 	return err
