@@ -3,8 +3,8 @@ package module
 import (
 	"context"
 	"fmt"
-	"os"
 	"net/http"
+	"os"
 
 	"github.com/go-chi/chi/v5"
 )
