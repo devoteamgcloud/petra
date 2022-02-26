@@ -46,6 +46,11 @@ const (
 	prefixProviders = "/v1/providers"
 )
 
+func getSD(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(fmt.Sprintf(`{"modules.v1": "%s/", "providers.v1": "%s/"}`, prefixModules, prefixProviders)))
+}
+
 func server() error {
 	r := chi.NewRouter()
 	r.Use(middleware.RealIP)
@@ -62,7 +67,13 @@ func server() error {
 
 	r.Use(middleware.Heartbeat("/is_alive"))
 
+	// Basic Service Discovery Handler
+	r.Get("/.well-known/terraform.json", getSD)
+
+	// Modules Handler
 	r.Route(prefixModules, module.Routing)
+
+	// Providers Handler
 	r.Route(prefixProviders, provider.Routing)
 
 	if err := http.ListenAndServe(":"+flagListenAddr, r); err != nil {
