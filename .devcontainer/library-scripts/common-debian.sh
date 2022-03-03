@@ -111,7 +111,7 @@ if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
         strace \
         manpages \
         python3.10 \
-        python3-pip \ 
+        python3-pip \
         manpages-dev "
         
     # Needed for adding manpages-posix and manpages-posix-dev which are non-free packages in Debian
