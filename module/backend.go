@@ -8,7 +8,7 @@ import (
 	"cloud.google.com/go/storage"
 )
 
-var gcsBucket Backend
+var gcsBucket *GCSBackend
 
 type Backend interface {
 	getModule(mod Module, ctx context.Context) (string, error)
@@ -22,12 +22,14 @@ type GCSBackend struct {
 
 func InitGCSBackend(bckt string) error {
 	ctx := context.Background()
+	fmt.Println("bucket name :", bckt)
 	client, err := storage.NewClient(ctx)
+	fmt.Println("Client : ", client)
 	if err != nil {
 		return err
 	}
 
-	gcsBucket := &GCSBackend{
+	gcsBucket = &GCSBackend{
 		client: client,
 		bucket: bckt,
 	}
