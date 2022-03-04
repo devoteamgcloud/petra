@@ -1,4 +1,4 @@
-FROM golang:1.17
+FROM golang:1.17.8-bullseye
 
 # [Option] Install zsh
 ARG INSTALL_ZSH="true"
@@ -22,12 +22,7 @@ RUN apt-get update \
     # Clean up
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
-RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" \
-    && echo "deb https://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" > /etc/apt/sources.list.d/google-cloud-sdk.list \
-    && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - \
-    && apt update \
-    && apt install direnv kubectx \
-    && apt install -y google-cloud-sdk/cloud-sdk-buster \
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | tee /usr/share/keyrings/cloud.google.gpg && apt-get update -y && apt-get install google-cloud-sdk -y \
     && gcloud --quiet config set core/disable_usage_reporting true \
     && gcloud --quiet config set component_manager/disable_update_check true \
     && gcloud --quiet config set metrics/environment github_docker_image \
