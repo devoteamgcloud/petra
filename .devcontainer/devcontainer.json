@@ -11,6 +11,12 @@
 		"terminal.integrated.shell.linux": "/bin/zsh",
 		"go.gopath": "/go"
 	},
+
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind",
+		"source=${env:HOME}${env:USERPROFILE}/.config/gcloud,target=/home/vscode/.gcloud-localhost,type=bind"
+	],
 	
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
