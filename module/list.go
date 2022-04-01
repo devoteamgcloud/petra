@@ -37,7 +37,7 @@ func getVersions(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(struct {
+	err = json.NewEncoder(w).Encode(struct {
 		Modules listModuleVersions `json:"modules"`
 	}{
 		listModuleVersions{
@@ -47,6 +47,9 @@ func getVersions(w http.ResponseWriter, r *http.Request) {
 			},
 		},
 	})
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
 }
 
 func (b *GCSBackend) listModuleVersions(mod Module, ctx context.Context) ([]Version, error) {
