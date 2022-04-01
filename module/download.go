@@ -16,6 +16,7 @@ func getDownloadURL(w http.ResponseWriter, r *http.Request) {
 		Provider:  chi.URLParam(r, "provider"),
 		Version:   chi.URLParam(r, "version"),
 	}
+	fmt.Println("Enters the getDownloadURL function")
 	ctx := context.Background()
 	fmt.Println("gcs bucket : ", gcsBucket)
 	downloadURL, err := gcsBucket.getModule(mod, ctx)
