@@ -6,6 +6,7 @@ require (
 	cloud.google.com/go/storage v1.21.0
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/spf13/cobra v1.4.0
+	google.golang.org/api v0.69.0
 )
 
 require (
@@ -24,7 +25,6 @@ require (
 	golang.org/x/sys v0.0.0-20220209214540-3681064d5158 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
-	google.golang.org/api v0.69.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20220216160803-4663080d8bc8 // indirect
 	google.golang.org/grpc v1.44.0 // indirect
