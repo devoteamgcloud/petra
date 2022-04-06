@@ -3,10 +3,15 @@ package module
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
+	"time"
 
+	"cloud.google.com/go/storage"
 	"github.com/go-chi/chi/v5"
+	"golang.org/x/oauth2/google"
 )
 
 func getDownloadURL(w http.ResponseWriter, r *http.Request) {
@@ -33,10 +38,29 @@ func getDownloadURL(w http.ResponseWriter, r *http.Request) {
 func (b *GCSBackend) getModule(mod Module, ctx context.Context) (string, error) {
 	fmt.Println("mod :", modPath(mod))
 	fmt.Println("context : ", ctx)
-	object := b.client.Bucket(b.bucket).Object(modPath(mod))
-	attrs, err := object.Attrs(ctx)
+
+	sakeyFile := "./storage-sa.json"
+
+	saKey, err := ioutil.ReadFile(sakeyFile)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	cfg, err := google.JWTConfigFromJSON(saKey)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	opts := &storage.SignedURLOptions{
+		GoogleAccessID: cfg.Email,
+		PrivateKey:     cfg.PrivateKey,
+		Method:         "GET",
+		Expires:        time.Now().Add(2 * time.Minute),
+	}
+
+	signedUrl, err := b.client.Bucket(b.bucket).SignedURL(modPath(mod), opts)
 	if err != nil {
 		return "", err
 	}
-	return fmt.Sprintf("gcs::https://www.googleapis.com/storage/v1/%s/%s", b.bucket, attrs.Name), nil
+	return fmt.Sprintln(signedUrl), nil
 }
