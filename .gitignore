@@ -37,3 +37,6 @@ dist/
 # env files that usually contain secrets or local config
 .env
 .envrc
+
+# GCP service account file
+service-account.json

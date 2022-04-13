@@ -10,7 +10,6 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var rootCmd = &cobra.Command{
@@ -43,16 +42,19 @@ func init() {
 }
 
 const (
-	envPrefix       = "PETRA"
 	prefixModules   = "/v1/modules"
 	prefixProviders = "/v1/providers"
 )
 
-func server() error {
-	v := viper.New()
-	v.SetEnvPrefix(envPrefix)
-	v.AutomaticEnv()
+func getSD(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	_, err := w.Write([]byte(fmt.Sprintf(`{"modules.v1": "%s/", "providers.v1": "%s/"}`, prefixModules, prefixProviders)))
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+}
 
+func server() error {
 	r := chi.NewRouter()
 	r.Use(middleware.RealIP)
 	r.Use(middleware.RequestID)
@@ -60,9 +62,21 @@ func server() error {
 	r.Use(middleware.Logger)
 	r.Use(middleware.GetHead)
 
+	err := module.InitGCSBackend(flagGCSBucket)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return err
+	}
+
 	r.Use(middleware.Heartbeat("/is_alive"))
 
+	// Basic Service Discovery Handler
+	r.Get("/.well-known/terraform.json", getSD)
+
+	// Modules Handler
 	r.Route(prefixModules, module.Routing)
+
+	// Providers Handler
 	r.Route(prefixProviders, provider.Routing)
 
 	if err := http.ListenAndServe(":"+flagListenAddr, r); err != nil {
