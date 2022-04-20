@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/arthur-laurentdka/petra/module"
-	"github.com/arthur-laurentdka/petra/provider"
+	"github.com/arthur-laurentdka/petra/server/module"
+	"github.com/arthur-laurentdka/petra/server/provider"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/spf13/cobra"

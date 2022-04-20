@@ -1,4 +1,4 @@
-module github.com/arthur-laurentdka/petra
+module github.com/arthur-laurentdka/petra/server
 
 go 1.17
 
