@@ -38,4 +38,4 @@ dist/
 .env
 .envrc
 
-./server/storage-sa.json
+/server/storage-sa.json
