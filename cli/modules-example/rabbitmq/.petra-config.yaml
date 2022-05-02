@@ -1,0 +1,9 @@
+# Required
+name: "rabbitmq"
+namespace: "dev"
+version: "0.0.1"
+
+# Optional
+metadata:
+  owner: "Hyokil KIM"
+  team: "GCP"

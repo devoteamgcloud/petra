@@ -7,9 +7,11 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+    "io/ioutil"
 	"time"
 
 	"cloud.google.com/go/storage"
+	"gopkg.in/yaml.v2"
 )
 
 var gcsBucket *GCSBackend
@@ -17,6 +19,18 @@ var gcsBucket *GCSBackend
 type GCSBackend struct {
 	client *storage.Client
 	bucket string
+}
+
+type Metadata struct {
+	Owner string
+	Team string
+}
+
+type PetraConfig struct {
+	Name string
+	Namespace string
+	Version string
+	Metadata Metadata
 }
 
 func InitGCSBackend(bckt string) error {
@@ -44,45 +58,6 @@ func InitGCSBackend(bckt string) error {
 	}
 	fmt.Println("The", gcsBucket.bucket, "bucket exists and has attributes:", attrs)
 	return err
-}
-
-func UploadModule(filepath string, filename string) error {
-	ctx := context.Background()
-	// Open local file.
-	f, err := os.Open(filepath)
-	if err != nil {
-		return fmt.Errorf("os.Open: %v", err)
-	}
-	defer f.Close()
-
-	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
-	defer cancel()
-
-	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(filename)
-
-	// Optional: set a generation-match precondition to avoid potential race
-	// conditions and data corruptions. The request to upload is aborted if the
-	// object's generation number does not match your precondition.
-	// For an object that does not yet exist, set the DoesNotExist precondition.
-	o = o.If(storage.Conditions{DoesNotExist: true})
-	// If the live object already exists in your bucket, set instead a
-	// generation-match precondition using the live object's generation number.
-	// attrs, err := o.Attrs(ctx)
-	// if err != nil {
-	//      return fmt.Errorf("object.Attrs: %v", err)
-	// }
-	// o = o.If(storage.Conditions{GenerationMatch: attrs.Generation})
-
-	// Upload an object with storage.Writer.
-	wc := o.NewWriter(ctx)
-	if _, err = io.Copy(wc, f); err != nil {
-		return fmt.Errorf("io.Copy: %v", err)
-	}
-	if err := wc.Close(); err != nil {
-		return fmt.Errorf("Writer.Close: %v", err)
-	}
-	//fmt.Fprintf(w, "Blob %v uploaded.\n", filename)
-	return nil
 }
 
 func Tar(moduleDirectory string) error {
@@ -129,5 +104,65 @@ func Tar(moduleDirectory string) error {
 	if err != nil {
 		panic(err)
 	}
+	return nil
+}
+
+func GetPetraConfig(modulePath string) (*PetraConfig, error) {
+	config := PetraConfig{}
+	configPath := modulePath + ".petra-config.yaml"
+
+	fmt.Println(configPath)
+
+	yamlFile, err := ioutil.ReadFile(configPath)
+	if err != nil {
+		return nil, fmt.Errorf("yamlFile.Get err   #%v ", err)
+	}
+	err = yaml.Unmarshal(yamlFile, &config)
+	if err != nil {
+        return nil, fmt.Errorf("error: %v", err)
+    }
+    fmt.Printf("%+v\n", config)
+	return &config, nil
+}
+
+
+func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
+	ctx := context.Background()
+	// Open local file.
+	f, err := os.Open(zipFilePath)
+	if err != nil {
+		return fmt.Errorf("os.Open: %v", err)
+	}
+	defer f.Close()
+
+	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
+	defer cancel()
+
+	// e.g.: dev/0.0.1/rabbitmq.zip
+	filePath := petraConf.Namespace + "/" + petraConf.Version + "/" + petraConf.Name + ".zip"
+	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(filePath)
+
+	// Optional: set a generation-match precondition to avoid potential race
+	// conditions and data corruptions. The request to upload is aborted if the
+	// object's generation number does not match your precondition.
+	// For an object that does not yet exist, set the DoesNotExist precondition.
+	o = o.If(storage.Conditions{DoesNotExist: true})
+	// If the live object already exists in your bucket, set instead a
+	// generation-match precondition using the live object's generation number.
+	// attrs, err := o.Attrs(ctx)
+	// if err != nil {
+	//      return fmt.Errorf("object.Attrs: %v", err)
+	// }
+	// o = o.If(storage.Conditions{GenerationMatch: attrs.Generation})
+
+	// Upload an object with storage.Writer.
+	wc := o.NewWriter(ctx)
+	if _, err = io.Copy(wc, f); err != nil {
+		return fmt.Errorf("io.Copy: %v", err)
+	}
+	if err := wc.Close(); err != nil {
+		return fmt.Errorf("Writer.Close: %v", err)
+	}
+	//fmt.Fprintf(w, "Blob %v uploaded.\n", filename)
 	return nil
 }

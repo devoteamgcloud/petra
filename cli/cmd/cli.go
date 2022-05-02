@@ -50,7 +50,13 @@ func cli() error {
 		return err
 	}
 
-	err = module.UploadModule("./module.zip", "module.zip")
+	petraConf, err := module.GetPetraConfig(flagModuleDirectory)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return err
+	}
+
+	err = module.UploadModule("./module.zip", petraConf)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return err

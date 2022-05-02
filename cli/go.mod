@@ -5,6 +5,7 @@ go 1.18
 require (
 	cloud.google.com/go/storage v1.22.0
 	github.com/spf13/cobra v1.4.0
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (
