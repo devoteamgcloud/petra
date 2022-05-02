@@ -139,8 +139,8 @@ func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
 	defer cancel()
 
 	// e.g.: dev/0.0.1/rabbitmq.zip
-	filePath := petraConf.Namespace + "/" + petraConf.Version + "/" + petraConf.Name + ".zip"
-	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(filePath)
+	object := petraConf.Namespace + "/" + petraConf.Version + "/" + petraConf.Name + ".zip"
+	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(object)
 
 	// Optional: set a generation-match precondition to avoid potential race
 	// conditions and data corruptions. The request to upload is aborted if the
@@ -155,8 +155,18 @@ func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
 	// }
 	// o = o.If(storage.Conditions{GenerationMatch: attrs.Generation})
 
-	// Upload an object with storage.Writer.
 	wc := o.NewWriter(ctx)
+
+	// Update the object to set the metadata:
+	// - owner
+	// - team
+	objectAttrs := map[string]string{
+			"owner": petraConf.Metadata.Owner,
+			"team": petraConf.Metadata.Team,
+		}
+	wc.ObjectAttrs.Metadata = objectAttrs
+
+	// Upload an object with storage.Writer.
 	if _, err = io.Copy(wc, f); err != nil {
 		return fmt.Errorf("io.Copy: %v", err)
 	}
