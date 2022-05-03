@@ -142,19 +142,6 @@ func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
 	object := petraConf.Namespace + "/" + petraConf.Version + "/" + petraConf.Name + ".zip"
 	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(object)
 
-	// Optional: set a generation-match precondition to avoid potential race
-	// conditions and data corruptions. The request to upload is aborted if the
-	// object's generation number does not match your precondition.
-	// For an object that does not yet exist, set the DoesNotExist precondition.
-	o = o.If(storage.Conditions{DoesNotExist: true})
-	// If the live object already exists in your bucket, set instead a
-	// generation-match precondition using the live object's generation number.
-	// attrs, err := o.Attrs(ctx)
-	// if err != nil {
-	//      return fmt.Errorf("object.Attrs: %v", err)
-	// }
-	// o = o.If(storage.Conditions{GenerationMatch: attrs.Generation})
-
 	wc := o.NewWriter(ctx)
 
 	// Update the object to set the metadata:
