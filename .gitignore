@@ -38,5 +38,4 @@ dist/
 .env
 .envrc
 
-# GCP service account file
-service-account.json
+/server/storage-sa.json
