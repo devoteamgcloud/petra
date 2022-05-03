@@ -9,11 +9,11 @@ on:
 
 jobs:
   server-ci-and-release:
-    uses: arthur-laurentdka/petra/tree/main/.github/workflows/ci-workflow-call.yml@main
+    uses: arthur-laurentdka/petra/tree/main/.github/workflows/ci-workflow-call.yml@feature/cli-upload-module
     with:
       working-directory: ./server
   cli-ci-and-release:
-    uses: arthur-laurentdka/petra/tree/main/.github/workflows/ci-workflow-call.yml@main
+    uses: arthur-laurentdka/petra/tree/main/.github/workflows/ci-workflow-call.yml@feature/cli-upload-module
     with:
       working-directory: ./cli
   # server-ci:
