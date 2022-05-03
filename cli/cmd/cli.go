@@ -36,8 +36,14 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&flagGCSBucket, "gcs-bucket", "", "Name of the Google Cloud Storage bucket you want to use for storage (required)")
 	rootCmd.PersistentFlags().StringVar(&flagModuleDirectory, "module-directory", "", "Directory of the module you want to upload (required)")
 
-	rootCmd.MarkPersistentFlagRequired("gcs-bucket")
-	rootCmd.MarkPersistentFlagRequired("module-directory")
+	err := rootCmd.MarkPersistentFlagRequired("gcs-bucket")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+	err = rootCmd.MarkPersistentFlagRequired("module-directory")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
 }
 
 func cli() error {
