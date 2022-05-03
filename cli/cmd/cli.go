@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/arthur-laurentdka/petra/cli/module"
+	"github.com/arthur-laurentdka/petra/cli/internal"
 	"github.com/spf13/cobra"
 )
 

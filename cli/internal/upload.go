@@ -5,9 +5,9 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
-    "io/ioutil"
 	"time"
 
 	"cloud.google.com/go/storage"
@@ -23,14 +23,14 @@ type GCSBackend struct {
 
 type Metadata struct {
 	Owner string
-	Team string
+	Team  string
 }
 
 type PetraConfig struct {
-	Name string
+	Name      string
 	Namespace string
-	Version string
-	Metadata Metadata
+	Version   string
+	Metadata  Metadata
 }
 
 func InitGCSBackend(bckt string) error {
@@ -119,24 +119,23 @@ func GetPetraConfig(modulePath string) (*PetraConfig, error) {
 	}
 	err = yaml.Unmarshal(yamlFile, &config)
 	if err != nil {
-        return nil, fmt.Errorf("error: %v", err)
-    }
+		return nil, fmt.Errorf("error: %v", err)
+	}
 	fmt.Printf("%+v\n", config)
 
 	// check required fields
 	if config.Name == "" {
-		return nil,  fmt.Errorf("error: required field (name) is missing in the config file")
+		return nil, fmt.Errorf("error: required field (name) is missing in the config file")
 	}
 	if config.Namespace == "" {
-		return nil,  fmt.Errorf("error: required field (namespace) is missing in the config file")
+		return nil, fmt.Errorf("error: required field (namespace) is missing in the config file")
 	}
 	if config.Version == "" {
-		return nil,  fmt.Errorf("error: required field (version) is missing in the config file")
+		return nil, fmt.Errorf("error: required field (version) is missing in the config file")
 	}
 
 	return &config, nil
 }
-
 
 func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
 	ctx := context.Background()
@@ -160,9 +159,9 @@ func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
 	// - owner
 	// - team
 	objectAttrs := map[string]string{
-			"owner": petraConf.Metadata.Owner,
-			"team": petraConf.Metadata.Team,
-		}
+		"owner": petraConf.Metadata.Owner,
+		"team":  petraConf.Metadata.Team,
+	}
 	wc.ObjectAttrs.Metadata = objectAttrs
 
 	// Upload an object with storage.Writer.
