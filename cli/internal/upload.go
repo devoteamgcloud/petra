@@ -27,8 +27,9 @@ type Metadata struct {
 }
 
 type PetraConfig struct {
-	Name      string
 	Namespace string
+	Name      string
+	Provider  string
 	Version   string
 	Metadata  Metadata
 }
@@ -124,11 +125,14 @@ func GetPetraConfig(modulePath string) (*PetraConfig, error) {
 	fmt.Printf("%+v\n", config)
 
 	// check required fields
+	if config.Namespace == "" {
+		return nil, fmt.Errorf("error: required field (namespace) is missing in the config file")
+	}
 	if config.Name == "" {
 		return nil, fmt.Errorf("error: required field (name) is missing in the config file")
 	}
-	if config.Namespace == "" {
-		return nil, fmt.Errorf("error: required field (namespace) is missing in the config file")
+	if config.Provider == "" {
+		return nil, fmt.Errorf("error: required field (provider) is missing in the config file")
 	}
 	if config.Version == "" {
 		return nil, fmt.Errorf("error: required field (version) is missing in the config file")
@@ -149,9 +153,15 @@ func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
 
-	// e.g.: dev/0.0.1/rabbitmq.zip
-	object := petraConf.Namespace + "/" + petraConf.Version + "/" + petraConf.Name + ".zip"
-	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(object)
+	// {namespace}/{module}/{provider}/{namespace}-{module}-{provider}-{version}.tar.gz
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+
+	// {namespace}/{module}/{provider}/
+	objectDirectory := petraConf.Namespace + "/" + petraConf.Name + "/" + petraConf.Provider + "/"
+	// {namespace}-{module}-{provider}-{version}.tar.gz
+	object := petraConf.Namespace + "-" + petraConf.Name + "-" + petraConf.Provider + "-" + petraConf.Version + ".tar.gz"
+
+	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(objectDirectory + object)
 
 	wc := o.NewWriter(ctx)
 
