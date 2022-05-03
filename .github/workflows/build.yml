@@ -10,6 +10,7 @@ on:
 jobs:
   server-ci-and-release:
     uses: ./.github/workflows/ci-reusable-workflow.yml
+    with:
       working-directory: ./server
   cli-ci-and-release:
     uses: ./.github/workflows/ci-reusable-workflow.yml
