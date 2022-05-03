@@ -9,8 +9,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "petra",
-	Short: "private terraform registry",
+	Use:   "petracli",
+	Short: "private terraform registry cli",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := cli(); err != nil {
 			return err
@@ -33,8 +33,11 @@ var (
 )
 
 func init() {
-	rootCmd.PersistentFlags().StringVar(&flagGCSBucket, "gcs-bucket", "", "Name of the Google Cloud Storage bucket you want to use for storage")
-	rootCmd.PersistentFlags().StringVar(&flagModuleDirectory, "module-directory", "", "Directory of the module you want to upload")
+	rootCmd.PersistentFlags().StringVar(&flagGCSBucket, "gcs-bucket", "", "Name of the Google Cloud Storage bucket you want to use for storage (required)")
+	rootCmd.PersistentFlags().StringVar(&flagModuleDirectory, "module-directory", "", "Directory of the module you want to upload (required)")
+
+	rootCmd.MarkPersistentFlagRequired("gcs-bucket")
+	rootCmd.MarkPersistentFlagRequired("module-directory")
 }
 
 func cli() error {
