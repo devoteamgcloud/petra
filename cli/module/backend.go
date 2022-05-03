@@ -121,7 +121,19 @@ func GetPetraConfig(modulePath string) (*PetraConfig, error) {
 	if err != nil {
         return nil, fmt.Errorf("error: %v", err)
     }
-    fmt.Printf("%+v\n", config)
+	fmt.Printf("%+v\n", config)
+
+	// check required fields
+	if config.Name == "" {
+		return nil,  fmt.Errorf("error: required field (name) is missing in the config file")
+	}
+	if config.Namespace == "" {
+		return nil,  fmt.Errorf("error: required field (namespace) is missing in the config file")
+	}
+	if config.Version == "" {
+		return nil,  fmt.Errorf("error: required field (version) is missing in the config file")
+	}
+
 	return &config, nil
 }
 
