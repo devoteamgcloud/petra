@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/arthur-laurentdka/petra/cli/internal"
 	"github.com/spf13/cobra"
 )
 
@@ -12,9 +11,6 @@ var rootCmd = &cobra.Command{
 	Use:   "petracli",
 	Short: "private terraform registry cli",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if err := cli(); err != nil {
-			return err
-		}
 		return nil
 	},
 }
@@ -33,9 +29,11 @@ var (
 )
 
 func init() {
+	// Flags
 	rootCmd.PersistentFlags().StringVar(&flagGCSBucket, "gcs-bucket", "", "Name of the Google Cloud Storage bucket you want to use for storage (required)")
 	rootCmd.PersistentFlags().StringVar(&flagModuleDirectory, "module-directory", "", "Directory of the module you want to upload (required)")
 
+	// Making Flags required
 	err := rootCmd.MarkPersistentFlagRequired("gcs-bucket")
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -44,31 +42,4 @@ func init() {
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 	}
-}
-
-func cli() error {
-	err := module.InitGCSBackend(flagGCSBucket)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return err
-	}
-
-	err = module.Tar(flagModuleDirectory)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return err
-	}
-
-	petraConf, err := module.GetPetraConfig(flagModuleDirectory)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return err
-	}
-
-	err = module.UploadModule("./module.zip", petraConf)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return err
-	}
-	return nil
 }

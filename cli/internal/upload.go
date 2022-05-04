@@ -1,4 +1,4 @@
-package module
+package internal
 
 import (
 	"archive/zip"
@@ -141,7 +141,7 @@ func GetPetraConfig(modulePath string) (*PetraConfig, error) {
 	return &config, nil
 }
 
-func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
+func UploadModule(w io.Writer, zipFilePath string, petraConf *PetraConfig) error {
 	ctx := context.Background()
 	// Open local file.
 	f, err := os.Open(zipFilePath)
@@ -153,15 +153,9 @@ func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
 
-	// {namespace}/{module}/{provider}/{namespace}-{module}-{provider}-{version}.tar.gz
-	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	object := GetObjectPathFromConfig(petraConf)
 
-	// {namespace}/{module}/{provider}/
-	objectDirectory := petraConf.Namespace + "/" + petraConf.Name + "/" + petraConf.Provider + "/"
-	// {namespace}-{module}-{provider}-{version}.tar.gz
-	object := petraConf.Namespace + "-" + petraConf.Name + "-" + petraConf.Provider + "-" + petraConf.Version + ".tar.gz"
-
-	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(objectDirectory + object)
+	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(object)
 
 	wc := o.NewWriter(ctx)
 
@@ -181,6 +175,6 @@ func UploadModule(zipFilePath string, petraConf *PetraConfig) error {
 	if err := wc.Close(); err != nil {
 		return fmt.Errorf("Writer.Close: %v", err)
 	}
-	//fmt.Fprintf(w, "Blob %v uploaded.\n", filename)
+	fmt.Fprintf(w, "Blob %v uploaded.\n", object)
 	return nil
 }
