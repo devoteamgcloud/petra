@@ -13,8 +13,6 @@ import (
 	"cloud.google.com/go/storage"
 )
 
-var gcsBucket *GCSBackend
-
 type Metadata struct {
 	Owner string
 	Team  string
@@ -86,6 +84,7 @@ func uploadFile(w io.Writer, bucket string, zipFilePath string, petraConf *Petra
 	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
 	defer cancel()
 
+	// create a temporary file for the .tar.gz file
 	f, err := os.Open(zipFilePath)
 	if err != nil {
 		return fmt.Errorf("os.Open: %v", err)
@@ -113,6 +112,12 @@ func uploadFile(w io.Writer, bucket string, zipFilePath string, petraConf *Petra
 	}
 	if err := wc.Close(); err != nil {
 		return fmt.Errorf("Writer.Close: %v", err)
+	}
+
+	// Remove the temporary file after upload
+	os.Remove(zipFilePath)
+	if err != nil {
+		return fmt.Errorf("os.Open: %v", err)
 	}
 	fmt.Fprintf(w, "Blob %v uploaded.\n", object)
 	return nil

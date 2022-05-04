@@ -1,48 +1,13 @@
 package internal
 
 import (
-	"context"
 	"fmt"
 	"io/ioutil"
-	"os"
 
-	"cloud.google.com/go/storage"
 	"gopkg.in/yaml.v2"
 )
 
 const petraConfigFileName string = ".petra-config.yaml"
-
-type GCSBackend struct {
-	client *storage.Client
-	bucket string
-}
-
-func initGCSBackend(bckt string) error {
-	ctx := context.Background()
-	fmt.Println("bucket name :", bckt)
-	client, err := storage.NewClient(ctx)
-	fmt.Println("Client : ", client)
-	if err != nil {
-		return err
-	}
-
-	gcsBucket = &GCSBackend{
-		client: client,
-		bucket: bckt,
-	}
-
-	attrs, err := gcsBucket.client.Bucket(gcsBucket.bucket).Attrs(ctx)
-	if err == storage.ErrBucketNotExist {
-		fmt.Fprintln(os.Stderr, "The", gcsBucket.bucket, "bucket does not exist")
-		return err
-	}
-	if err != nil {
-		// Other error to handle
-		fmt.Fprintln(os.Stderr, err)
-	}
-	fmt.Println("The", gcsBucket.bucket, "bucket exists and has attributes:", attrs)
-	return err
-}
 
 func editConfigFile(config *PetraConfig, modulePath string) error {
 	data, err := yaml.Marshal(&config)

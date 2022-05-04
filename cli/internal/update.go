@@ -33,7 +33,7 @@ func updateObjectMetadata(w io.Writer, bucket string, object string, newMetadata
 	if _, err := o.Update(ctx, objectAttrsToUpdate); err != nil {
 		return fmt.Errorf("ObjectHandle(%q).Update: %v", object, err)
 	}
-	fmt.Fprintf(w, "Updated custom metadata for object %v in bucket %v.\n", object, gcsBucket.bucket)
+	fmt.Fprintf(w, "Updated custom metadata for object %v in bucket %v.\n", object, bucket)
 	return nil
 }
 
@@ -115,8 +115,10 @@ func UpdateModule(bucket string, moduleDirectory string, flagConfig *PetraConfig
 		var buffer bytes.Buffer
 
 		updateMetadata(currentConf, flagConfig)
-		updateObjectMetadata(&buffer, bucket, currentObject, flagConfig.Metadata)
-
+		err = updateObjectMetadata(&buffer, bucket, currentObject, flagConfig.Metadata)
+		if err != nil {
+			return fmt.Errorf("error: %v", err)
+		}
 	}
 	// 2.2 Move object if we want to update one of the following field:
 	// - namespace | name | provider | version

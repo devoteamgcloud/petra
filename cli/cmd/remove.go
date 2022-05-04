@@ -11,7 +11,7 @@ import (
 // removeCmd represents the remove command
 var removeCmd = &cobra.Command{
 	Use:   "remove",
-	Short: "A brief description of your command",
+	Short: "Remove the .tar.gz file of a Terraform module in the bucket",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
