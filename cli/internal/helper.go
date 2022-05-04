@@ -10,6 +10,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const petraConfigFileName string = ".petra-config.yaml"
+
 type GCSBackend struct {
 	client *storage.Client
 	bucket string
@@ -50,7 +52,7 @@ func editConfigFile(config *PetraConfig, modulePath string) error {
 
 	fmt.Println(string(data))
 
-	configFile := modulePath + ".petra-config.yaml"
+	configFile := modulePath + petraConfigFileName
 
 	err = ioutil.WriteFile(configFile, data, 0644)
 	if err != nil {
@@ -63,7 +65,7 @@ func editConfigFile(config *PetraConfig, modulePath string) error {
 
 func getPetraConfig(modulePath string) (*PetraConfig, error) {
 	config := PetraConfig{}
-	configPath := modulePath + ".petra-config.yaml"
+	configPath := modulePath + petraConfigFileName
 
 	fmt.Println(configPath)
 
