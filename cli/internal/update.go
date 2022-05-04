@@ -21,7 +21,7 @@ func updateObjectMetadata(w io.Writer, bucket string, object string, newMetadata
 	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
 	defer cancel()
 
-	o := gcsBucket.client.Bucket(bucket).Object(object)
+	o := client.Bucket(bucket).Object(object)
 
 	// Update the object to set the metadata.
 	objectAttrsToUpdate := storage.ObjectAttrsToUpdate{
@@ -99,9 +99,9 @@ func updateRequiredFields(currentConfig *PetraConfig, flagConfig *PetraConfig) {
 	}
 }
 
-func UpdateModule(modulePath string, bucket string, flagConfig *PetraConfig) error {
+func UpdateModule(bucket string, moduleDirectory string, flagConfig *PetraConfig) error {
 	// 1. Get info from petra config file
-	currentConf, err := getPetraConfig(modulePath)
+	currentConf, err := getPetraConfig(moduleDirectory)
 	if err != nil {
 		return fmt.Errorf("error: %v", err)
 	}
@@ -137,7 +137,7 @@ func UpdateModule(modulePath string, bucket string, flagConfig *PetraConfig) err
 	}
 
 	// 3. change petra config file
-	err = editConfigFile(flagConfig, modulePath)
+	err = editConfigFile(flagConfig, moduleDirectory)
 	if err != nil {
 		return fmt.Errorf("error: %v", err)
 	}

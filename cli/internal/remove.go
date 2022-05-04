@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -9,8 +10,7 @@ import (
 	"cloud.google.com/go/storage"
 )
 
-// deleteFile removes specified object.
-func DeleteFile(w io.Writer, bucket, modulePath string) error {
+func removeFile(w io.Writer, bucket, modulePath string) error {
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {
@@ -29,7 +29,7 @@ func DeleteFile(w io.Writer, bucket, modulePath string) error {
 
 	// Get full path of the tar.gz object in the bucket
 	object := getObjectPathFromConfig(petraConf)
-	fmt.Printf("Object to delete: %v", object)
+	fmt.Printf("Object to delete: %v\n", object)
 
 	o := client.Bucket(bucket).Object(object)
 
@@ -46,5 +46,15 @@ func DeleteFile(w io.Writer, bucket, modulePath string) error {
 		return fmt.Errorf("Object(%q).Delete: %v", object, err)
 	}
 	fmt.Fprintf(w, "Blob %v deleted.\n", object)
+	return nil
+}
+
+func RemoveModule(bucket string, modulePath string) error {
+	var buffer bytes.Buffer
+
+	err := removeFile(&buffer, bucket, modulePath)
+	if err != nil {
+		return fmt.Errorf("error: %v", err)
+	}
 	return nil
 }

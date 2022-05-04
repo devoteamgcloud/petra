@@ -39,25 +39,10 @@ func init() {
 	updateCmd.Flags().StringVar(&flagConfig.Version, "version", "", "Update module's version")
 	updateCmd.Flags().StringVar(&flagConfig.Metadata.Owner, "owner", "", "Update module's owner")
 	updateCmd.Flags().StringVar(&flagConfig.Metadata.Team, "team", "", "Update module's team")
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// updateCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 func update() error {
-	err := internal.InitGCSBackend(flagGCSBucket)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return err
-	}
-
-	err = internal.UpdateModule(flagModuleDirectory, flagGCSBucket, &flagConfig)
+	err := internal.UpdateModule(flagGCSBucket, flagModuleDirectory, &flagConfig)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return err

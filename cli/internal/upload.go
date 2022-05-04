@@ -2,12 +2,15 @@ package internal
 
 import (
 	"archive/zip"
+	"bytes"
 	"context"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 	"time"
+
+	"cloud.google.com/go/storage"
 )
 
 var gcsBucket *GCSBackend
@@ -25,7 +28,7 @@ type PetraConfig struct {
 	Metadata  Metadata
 }
 
-func Tar(moduleDirectory string) error {
+func tar(moduleDirectory string) error {
 	file, err := os.Create("module.zip")
 	if err != nil {
 		panic(err)
@@ -72,21 +75,26 @@ func Tar(moduleDirectory string) error {
 	return nil
 }
 
-func UploadModule(w io.Writer, zipFilePath string, petraConf *PetraConfig) error {
+func uploadFile(w io.Writer, bucket string, zipFilePath string, petraConf *PetraConfig) error {
 	ctx := context.Background()
-	// Open local file.
+	client, err := storage.NewClient(ctx)
+	if err != nil {
+		return fmt.Errorf("storage.NewClient: %v", err)
+	}
+	defer client.Close()
+
+	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
+	defer cancel()
+
 	f, err := os.Open(zipFilePath)
 	if err != nil {
 		return fmt.Errorf("os.Open: %v", err)
 	}
 	defer f.Close()
 
-	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
-	defer cancel()
-
 	object := getObjectPathFromConfig(petraConf)
 
-	o := gcsBucket.client.Bucket(gcsBucket.bucket).Object(object)
+	o := client.Bucket(bucket).Object(object)
 
 	wc := o.NewWriter(ctx)
 
@@ -107,5 +115,28 @@ func UploadModule(w io.Writer, zipFilePath string, petraConf *PetraConfig) error
 		return fmt.Errorf("Writer.Close: %v", err)
 	}
 	fmt.Fprintf(w, "Blob %v uploaded.\n", object)
+	return nil
+}
+
+func UploadModule(bucket string, modulePath string) error {
+	var buffer bytes.Buffer
+
+	err := tar(modulePath)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return err
+	}
+
+	petraConf, err := getPetraConfig(modulePath)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return err
+	}
+
+	err = uploadFile(&buffer, bucket, "./module.zip", petraConf)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return err
+	}
 	return nil
 }
