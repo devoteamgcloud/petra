@@ -106,6 +106,11 @@ func UpdateModule(bucket string, moduleDirectory string, flagConfig *PetraConfig
 		return fmt.Errorf("error: %v", err)
 	}
 
+	// Keep flagConfig for condition checks
+	newConf := flagConfig
+	updateMetadata(currentConf, newConf)
+	updateRequiredFields(currentConf, newConf)
+
 	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
 	currentObject := getObjectPathFromConfig(currentConf)
 
@@ -114,8 +119,7 @@ func UpdateModule(bucket string, moduleDirectory string, flagConfig *PetraConfig
 	if flagConfig.Metadata.Owner != "" || flagConfig.Metadata.Team != "" {
 		var buffer bytes.Buffer
 
-		updateMetadata(currentConf, flagConfig)
-		err = updateObjectMetadata(&buffer, bucket, currentObject, flagConfig.Metadata)
+		err = updateObjectMetadata(&buffer, bucket, currentObject, newConf.Metadata)
 		if err != nil {
 			return fmt.Errorf("error: %v", err)
 		}
@@ -127,9 +131,7 @@ func UpdateModule(bucket string, moduleDirectory string, flagConfig *PetraConfig
 	if flagConfig.Namespace != "" || flagConfig.Name != "" || flagConfig.Provider != "" || flagConfig.Version != "" {
 		var buffer bytes.Buffer
 
-		updateRequiredFields(currentConf, flagConfig)
-
-		destinationObject := getObjectPathFromConfig(flagConfig)
+		destinationObject := getObjectPathFromConfig(newConf)
 		fmt.Printf("destination object: %s\n", destinationObject)
 
 		err = moveFile(&buffer, bucket, currentObject, destinationObject)
@@ -139,7 +141,7 @@ func UpdateModule(bucket string, moduleDirectory string, flagConfig *PetraConfig
 	}
 
 	// 3. change petra config file
-	err = editConfigFile(flagConfig, moduleDirectory)
+	err = editConfigFile(newConf, moduleDirectory)
 	if err != nil {
 		return fmt.Errorf("error: %v", err)
 	}
