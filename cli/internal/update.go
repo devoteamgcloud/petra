@@ -10,14 +10,35 @@ import (
 	"cloud.google.com/go/storage"
 )
 
-// func UpdateObject() error {
+func updateObjectMetadata(w io.Writer, bucket string, object string, newMetadata Metadata) error {
+	ctx := context.Background()
+	client, err := storage.NewClient(ctx)
+	if err != nil {
+		return fmt.Errorf("storage.NewClient: %v", err)
+	}
+	defer client.Close()
 
-// }
+	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
+	defer cancel()
+
+	o := gcsBucket.client.Bucket(bucket).Object(object)
+
+	// Update the object to set the metadata.
+	objectAttrsToUpdate := storage.ObjectAttrsToUpdate{
+		Metadata: map[string]string{
+			"owner": newMetadata.Owner,
+			"team":  newMetadata.Team,
+		},
+	}
+	if _, err := o.Update(ctx, objectAttrsToUpdate); err != nil {
+		return fmt.Errorf("ObjectHandle(%q).Update: %v", object, err)
+	}
+	fmt.Fprintf(w, "Updated custom metadata for object %v in bucket %v.\n", object, gcsBucket.bucket)
+	return nil
+}
 
 // moveFile moves an object into another location.
 func moveFile(w io.Writer, bucket, object string, destinationObject string) error {
-	// bucket := "bucket-name"
-	// object := "object-name"
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {
@@ -54,7 +75,16 @@ func moveFile(w io.Writer, bucket, object string, destinationObject string) erro
 	return nil
 }
 
-func update(currentConfig *PetraConfig, flagConfig *PetraConfig) {
+func updateMetadata(currentConfig *PetraConfig, flagConfig *PetraConfig) {
+	if flagConfig.Metadata.Owner == "" {
+		flagConfig.Metadata.Owner = currentConfig.Metadata.Owner
+	}
+	if flagConfig.Metadata.Team == "" {
+		flagConfig.Metadata.Team = currentConfig.Metadata.Team
+	}
+}
+
+func updateRequiredFields(currentConfig *PetraConfig, flagConfig *PetraConfig) {
 	if flagConfig.Namespace == "" {
 		flagConfig.Namespace = currentConfig.Namespace
 	}
@@ -69,37 +99,48 @@ func update(currentConfig *PetraConfig, flagConfig *PetraConfig) {
 	}
 }
 
-// 1. Read petra config file
-// 2. Read object
-// 3. Update object
-// 4. Update field in petra config file
 func UpdateModule(modulePath string, bucket string, flagConfig *PetraConfig) error {
 	// 1. Get info from petra config file
-	currentConf, err := GetPetraConfig(modulePath)
+	currentConf, err := getPetraConfig(modulePath)
 	if err != nil {
 		return fmt.Errorf("error: %v", err)
 	}
 
-	// 2.1 Move object if we want to update one of the following field:
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	currentObject := getObjectPathFromConfig(currentConf)
+
+	// 2.1 Change object's metadata:
+	// - owner | team
+	if flagConfig.Metadata.Owner != "" || flagConfig.Metadata.Team != "" {
+		var buffer bytes.Buffer
+
+		updateMetadata(currentConf, flagConfig)
+		updateObjectMetadata(&buffer, bucket, currentObject, flagConfig.Metadata)
+
+	}
+	// 2.2 Move object if we want to update one of the following field:
 	// - namespace | name | provider | version
 	// because they're part of the object's path:
 	// {namespace}/{module}/{provider}/{namespace}-{module}-{provider}-{version}.tar.gz
 	if flagConfig.Namespace != "" || flagConfig.Name != "" || flagConfig.Provider != "" || flagConfig.Version != "" {
 		var buffer bytes.Buffer
 
-		currentObject := GetObjectPathFromConfig(currentConf)
-		update(currentConf, flagConfig)
-		destinationObject := GetObjectPathFromConfig(flagConfig)
+		updateRequiredFields(currentConf, flagConfig)
 
-		fmt.Println(currentObject)
-		fmt.Println(destinationObject)
+		destinationObject := getObjectPathFromConfig(flagConfig)
+		fmt.Printf("destination object: %s\n", destinationObject)
+
 		err = moveFile(&buffer, bucket, currentObject, destinationObject)
 		if err != nil {
 			return fmt.Errorf("error: %v", err)
 		}
 	}
 
-	// 2.2 Otherwise we change the metadata of the object for:
-	// - owner | team
+	// 3. change petra config file
+	err = editConfigFile(flagConfig, modulePath)
+	if err != nil {
+		return fmt.Errorf("error: %v", err)
+	}
+
 	return nil
 }

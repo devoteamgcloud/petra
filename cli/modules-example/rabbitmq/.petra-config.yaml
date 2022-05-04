@@ -1,10 +1,7 @@
-# Required
-namespace: "dev"
-name: "rabbitmq"
-provider: "helm"
-version: "0.0.1"
-
-# Optional
+namespace: main
+name: elastic
+provider: helm
+version: 0.0.2
 metadata:
-  owner: "Hyokil KIM"
-  team: "GCP"
+  owner: toto
+  team: infra

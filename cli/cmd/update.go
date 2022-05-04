@@ -34,9 +34,9 @@ func init() {
 	rootCmd.AddCommand(updateCmd)
 
 	updateCmd.Flags().StringVar(&flagConfig.Namespace, "namespace", "", "Update module's namespace")
-	updateCmd.Flags().StringVar(&flagConfig.Namespace, "names", "", "Update module's name")
-	updateCmd.Flags().StringVar(&flagConfig.Namespace, "provider", "", "Update module's provider")
-	updateCmd.Flags().StringVar(&flagConfig.Namespace, "version", "", "Update module's version")
+	updateCmd.Flags().StringVar(&flagConfig.Name, "name", "", "Update module's name")
+	updateCmd.Flags().StringVar(&flagConfig.Provider, "provider", "", "Update module's provider")
+	updateCmd.Flags().StringVar(&flagConfig.Version, "version", "", "Update module's version")
 	updateCmd.Flags().StringVar(&flagConfig.Metadata.Owner, "owner", "", "Update module's owner")
 	updateCmd.Flags().StringVar(&flagConfig.Metadata.Team, "team", "", "Update module's team")
 	// Here you will define your flags and configuration settings.
@@ -51,7 +51,13 @@ func init() {
 }
 
 func update() error {
-	err := internal.UpdateModule(flagModuleDirectory, flagGCSBucket, &flagConfig)
+	err := internal.InitGCSBackend(flagGCSBucket)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return err
+	}
+
+	err = internal.UpdateModule(flagModuleDirectory, flagGCSBucket, &flagConfig)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return err
