@@ -27,11 +27,6 @@ to quickly create a Cobra application.`,
 	},
 }
 
-// Declare Flags.
-// var (
-// 	flagConfigFile string
-// )
-
 func init() {
 	rootCmd.AddCommand(removeCmd)
 
