@@ -63,7 +63,7 @@ func getPetraConfig(modulePath string) (*PetraConfig, error) {
 
 func getObjectPathFromConfig(petraConf *PetraConfig) string {
 	// {namespace}/{module}/{provider}/
-	objectDirectory := petraConf.Namespace + "/" + petraConf.Name + "/" + petraConf.Provider + "/"
+	objectDirectory := petraConf.Namespace + "/" + petraConf.Name + "/" + petraConf.Provider + "/" + petraConf.Version + "/"
 	// {namespace}-{module}-{provider}-{version}.tar.gz
 	object := petraConf.Namespace + "-" + petraConf.Name + "-" + petraConf.Provider + "-" + petraConf.Version + ".tar.gz"
 
