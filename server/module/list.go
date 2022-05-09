@@ -67,7 +67,7 @@ func (b *GCSBackend) listModuleVersions(mod Module, ctx context.Context) ([]Vers
 		if err != nil {
 			return versions, err
 		}
-		if attrs.ContentType != "text/plain" {
+		if attrs.ContentType != "application/zip" {
 			continue
 		}
 		version := strings.Split(attrs.Name, "/")[3]
