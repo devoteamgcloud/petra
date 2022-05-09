@@ -1,6 +1,6 @@
 FROM gcr.io/distroless/base:nonroot
 WORKDIR /
-COPY petra-cli /
+COPY petra /
 USER nonroot:nonroot
-EXPOSE 3001
-ENTRYPOINT [ "/petra-cli" ]
+EXPOSE 3000
+ENTRYPOINT [ "/petra" ]
