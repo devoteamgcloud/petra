@@ -36,7 +36,7 @@ func init() {
 }
 
 func update() error {
-	err := internal.UpdateModule(flagGCSBucket, flagModuleDirectory, &flagConfig)
+	err := internal.UpdateModule(flagGCSBucket, flagModuleDirectory, flagConfig)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return err
