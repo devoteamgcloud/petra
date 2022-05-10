@@ -5,14 +5,21 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/cobra/doc"
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "petracli",
-	Short: "private terraform registry cli",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return nil
-	},
+func main() {
+	var rootCmd = &cobra.Command{
+		Use:   "petracli",
+		Short: "private terraform registry cli",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return nil
+		},
+	}
+	err := doc.GenMarkdownTree(rootCmd, "./")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func Execute() {
