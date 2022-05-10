@@ -12,9 +12,9 @@ import (
 var removeCmd = &cobra.Command{
 	Use:   "remove",
 	Short: "Remove the module from a private registry",
-	Long: `Remove the module from a private registry.\n
-			1. Read the value from .petra-config.yaml of the local module\n
-			2. Remove the {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz from the Google Cloud Storage bucket`,
+	Long: `Remove the module from a private registry.
+			1. Read the value from .petra-config.yaml of the local module
+			2. Remove the {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz from the Google Cloud Storage bucket.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := remove(); err != nil {
 			return err

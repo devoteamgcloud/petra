@@ -24,6 +24,10 @@ Follow these steps if you are OK installing and using Go on your machine.
 
 `F1` → `Tasks: Run Build Task (Ctrl+Shift+B or ⇧⌘B)` to execute the build pipeline.
 
+## CLI doc
+
+* [petra cli](cli/doc/petra.md) - CLI to upload / remove / upload a terraform module to a private registry (Google Cloud Storage bucket).
+
 ## Release
 
 The release workflow is triggered each time a tag with `v` prefix is pushed.
