@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"cloud.google.com/go/storage"
@@ -36,8 +37,19 @@ func tar(moduleDirectory string) error {
 	w := zip.NewWriter(file)
 	defer w.Close()
 
+	counter := 0
+	modulePath := ""
+
 	walker := func(path string, info os.FileInfo, err error) error {
 		fmt.Printf("Crawling: %#v\n", path)
+
+		// We get the directory path the first time
+		// Used to remove it from files' path
+		// e.g.: modules-example/rabbitmq/main.tf -> main.tf
+		if counter == 0 {
+			modulePath = path
+			counter++
+		}
 		if err != nil {
 			return err
 		}
@@ -54,7 +66,10 @@ func tar(moduleDirectory string) error {
 		// This snippet happens to work because I don't use
 		// absolute paths, but ensure your real-world code
 		// transforms path into a zip-root relative path.
-		f, err := w.Create(path)
+
+		// pathWithoutModulePath = modules-example/rabbitmq/main.tf -> main.tf
+		pathWithoutModulePath := strings.ReplaceAll(path, modulePath, "")
+		f, err := w.Create(pathWithoutModulePath)
 		if err != nil {
 			return err
 		}
@@ -63,7 +78,6 @@ func tar(moduleDirectory string) error {
 		if err != nil {
 			return err
 		}
-
 		return nil
 	}
 	err = filepath.Walk(moduleDirectory, walker)
