@@ -11,7 +11,12 @@ import (
 // updateCmd represents the update command
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "Update one or multiple settings of a module and make changes in the .petra-config.yaml",
+	Short: "Update one or multiple config values of a module.",
+	Long: `Update one or multiple config values of a module.
+			1. Get config values passed as arguments to petra.
+			2. Make changes to {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz in the Google Cloud Storage bucket.
+			3. Make changes to the local .petra-config.yaml of the local module
+	`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := update(); err != nil {
 			return err

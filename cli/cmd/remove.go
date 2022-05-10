@@ -11,13 +11,10 @@ import (
 // removeCmd represents the remove command
 var removeCmd = &cobra.Command{
 	Use:   "remove",
-	Short: "Remove the .tar.gz file of a Terraform module in the bucket",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Remove the module from a private registry",
+	Long: `Remove the module from a private registry.
+			1. Read the value from .petra-config.yaml of the local module
+			2. Remove the {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz from the Google Cloud Storage bucket.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := remove(); err != nil {
 			return err
