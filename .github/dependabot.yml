@@ -5,15 +5,27 @@
 
 version: 2
 updates:
-  # Maintain dependencies for Go
+  # Maintain dependencies for cli
   - package-ecosystem: "gomod"
-    directory: "/"
+    directory: "/cli"
     schedule:
       interval: "weekly"
 
-  # Maintain dependencies for build tools
+  # Maintain dependencies for cli build tools
   - package-ecosystem: "gomod"
-    directory: "/tools"
+    directory: "/cli/tools"
+    schedule:
+      interval: "weekly"
+      
+    # Maintain dependencies for server
+  - package-ecosystem: "gomod"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+
+  # Maintain dependencies for server build tools
+  - package-ecosystem: "gomod"
+    directory: "/server/tools"
     schedule:
       interval: "weekly"
 
