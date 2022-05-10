@@ -13,10 +13,10 @@ release:
 dockers:
   -
     image_templates:
-    - "docker.pkg.github.com/arthur-laurentdka/petra/{{ .ProjectName }}:latest"
-    - "docker.pkg.github.com/arthur-laurentdka/petra/{{ .ProjectName }}:{{ .Major }}"
-    - "docker.pkg.github.com/arthur-laurentdka/petra/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
-    - "docker.pkg.github.com/arthur-laurentdka/petra/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+    - "docker.pkg.github.com/devoteamgcloud/petra/{{ .ProjectName }}:latest"
+    - "docker.pkg.github.com/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}"
+    - "docker.pkg.github.com/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
+    - "docker.pkg.github.com/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
