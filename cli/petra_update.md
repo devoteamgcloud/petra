@@ -1,9 +1,17 @@
-## petracli update
+## petra update
 
-Update one or multiple settings of a module and make changes in the .petra-config.yaml
+Update one or multiple config values of a module.
+
+### Synopsis
+
+Update one or multiple config values of a module.
+			1. Get config values passed as arguments to petra.
+			2. Make changes to {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz in the Google Cloud Storage bucket.
+			3. Make changes to the local .petra-config.yaml of the local module
+	
 
 ```
-petracli update [flags]
+petra update [flags]
 ```
 
 ### Options
@@ -27,5 +35,5 @@ petracli update [flags]
 
 ### SEE ALSO
 
-* [petracli](petracli.md)	 - private terraform registry cli
+* [petra](petra.md)	 - Private terraform registry cli
 
