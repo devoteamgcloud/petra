@@ -28,7 +28,7 @@ Follow these steps if you are OK installing and using Go on your machine.
 
 ### CLI
 * [petra cli](cli/doc/petra.md) - CLI to upload / remove / upload a terraform module to a private registry (Google Cloud Storage bucket).
-### CLI
+### Server
 * [petra server](server/doc/petra.md) - Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket).
 
 ## Release
