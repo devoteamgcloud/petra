@@ -62,5 +62,8 @@ jobs:
         with:
           go-version: ${{inputs.go-version}}
 
+      - name: Run tests
+        run: make test
+
       - name: Release test
         run: make build
