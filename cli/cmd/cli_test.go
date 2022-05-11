@@ -30,6 +30,8 @@ func executeCommandC(root *cobra.Command, args ...string) (c *cobra.Command, out
 
 // Tests
 func TestRootExecuteUnknownCommand(t *testing.T) {
+	fmt.Println("=================================")
+	fmt.Println("test: TestRootExecuteUnknownCommand")
 	output, err := executeCommand(rootCmd, "unknown")
 
 	fmt.Println(err)
@@ -38,9 +40,13 @@ func TestRootExecuteUnknownCommand(t *testing.T) {
 	if output != expected {
 		t.Errorf("\nExpected:\n %q\nGot:\n %q\n", expected, output)
 	}
+	fmt.Println("=================================")
+	fmt.Printf("\n")
 }
 
 func TestUploadSubCmdNoFlag(t *testing.T) {
+	fmt.Println("=================================")
+	fmt.Println("test: TestUploadSubCmdNoFlag")
 	_, err := executeCommand(rootCmd, "upload")
 
 	fmt.Println(err)
@@ -49,4 +55,36 @@ func TestUploadSubCmdNoFlag(t *testing.T) {
 	if err.Error() != expected {
 		t.Errorf("\nExpected:\n %q\nGot:\n %q\n", expected, err.Error())
 	}
+	fmt.Println("=================================")
+	fmt.Printf("\n")
+}
+
+func TestRemoveSubCmdNoFlag(t *testing.T) {
+	fmt.Println("=================================")
+	fmt.Println("test: TestRemoveSubCmdNoFlag")
+	_, err := executeCommand(rootCmd, "remove")
+
+	fmt.Println(err)
+	expected := "required flag(s) \"gcs-bucket\", \"module-directory\" not set"
+
+	if err.Error() != expected {
+		t.Errorf("\nExpected:\n %q\nGot:\n %q\n", expected, err.Error())
+	}
+	fmt.Println("=================================")
+	fmt.Printf("\n")
+}
+
+func TestUpdateSubCmdNoFlag(t *testing.T) {
+	fmt.Println("=================================")
+	fmt.Println("test: TestUpdateSubCmdNoFlag")
+	_, err := executeCommand(rootCmd, "update")
+
+	fmt.Println(err)
+	expected := "required flag(s) \"gcs-bucket\", \"module-directory\" not set"
+
+	if err.Error() != expected {
+		t.Errorf("\nExpected:\n %q\nGot:\n %q\n", expected, err.Error())
+	}
+	fmt.Println("=================================")
+	fmt.Printf("\n")
 }
