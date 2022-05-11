@@ -10,8 +10,6 @@ import (
 )
 
 // Utils
-func emptyRun(*cobra.Command, []string) {}
-
 func executeCommand(root *cobra.Command, args ...string) (output string, err error) {
 	_, output, err = executeCommandC(root, args...)
 	return output, err
