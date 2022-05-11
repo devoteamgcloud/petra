@@ -211,3 +211,39 @@ func TestRemoveModule(t *testing.T) {
 	fmt.Println("=================================")
 	fmt.Printf("\n")
 }
+
+// func TestUpdateModule(t *testing.T) {
+// 	fmt.Println("=================================")
+// 	fmt.Println("test: TestUpdateModule")
+
+// 	// Exec: petra upload --gcs-bucket=toltol-private-registry --module-directory=../modules-example/rabbitmq
+// 	bucket := "toltol-private-registry"
+// 	moduleDir := "../modules-example/rabbitmq/"
+// 	_, err := executeCommand(rootCmd, "remove", "--gcs-bucket="+bucket, "--module-directory="+moduleDir)
+
+// 	// Get petra config in ../modules-example/rabbitmq/.petra-config.yaml
+// 	conf, err := internal.GetPetraConfig(moduleDir)
+// 	if err != nil {
+// 		t.Errorf("error: %v", err)
+// 	}
+// 	fmt.Println(conf)
+
+// 	// Get object path in Google Cloud Storage bucket from config
+// 	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+// 	objectPath := internal.GetObjectPathFromConfig(conf)
+// 	fmt.Println(objectPath)
+
+// 	// Get object attributes from Google Cloud Storage bucket
+// 	var buffer bytes.Buffer
+// 	_, err = getMetadata(&buffer, bucket, objectPath)
+
+// 	expected := `Object("` + objectPath + `").Attrs: storage: object doesn't exist`
+
+// 	// Must return a error: the object doesn't exist because we removed it
+// 	if err == nil || err.Error() != expected {
+// 		t.Errorf("\nExpected:\n %q\nGot:\n %q\n", expected, err.Error())
+// 	}
+
+// 	fmt.Println("=================================")
+// 	fmt.Printf("\n")
+// }
