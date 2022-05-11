@@ -65,15 +65,15 @@ jobs:
         with:
           go-version: ${{inputs.go-version}}
 
-      - name: Run tests
-        run: make test
-
-      - uses: actions/checkout@v2
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
+      - uses: actions/checkout@v3
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@v0.7.1
         with:
             version: '270.0.0'
             service_account_key: ${{ secrets.GCP_SA_KEY }}
-      - run: echo -n ${{ secrets.GCP_SA_KEY }} | base64 --decode > $GOOGLE_APPLICATION_CREDENTIALS
+      - run: echo -n ${{ secrets.GCP_SA_KEY }} > $GOOGLE_APPLICATION_CREDENTIALS
+
+      - name: Run tests
+        run: make test
 
       - name: Release test
         run: make build
