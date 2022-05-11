@@ -1,5 +1,8 @@
 name: Create and Publish Petra docker image (CLI and Server)
 
+env:
+    GOOGLE_APPLICATION_CREDENTIALS: key.json
+
 on:
   workflow_call:
     inputs:
@@ -64,6 +67,13 @@ jobs:
 
       - name: Run tests
         run: make test
+
+      - uses: actions/checkout@v2
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+            version: '270.0.0'
+            service_account_key: ${{ secrets.GCP_SA_KEY }}
+      - run: echo -n ${{ secrets.GCP_SA_KEY }} | base64 --decode > $GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Release test
         run: make build
