@@ -105,7 +105,7 @@ func uploadFile(w io.Writer, bucket string, zipFilePath string, petraConf *Petra
 	}
 	defer f.Close()
 
-	object := getObjectPathFromConfig(petraConf)
+	object := GetObjectPathFromConfig(petraConf)
 
 	o := client.Bucket(bucket).Object(object)
 
@@ -146,7 +146,7 @@ func UploadModule(bucket string, modulePath string) error {
 		return err
 	}
 
-	petraConf, err := getPetraConfig(modulePath)
+	petraConf, err := GetPetraConfig(modulePath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return err

@@ -22,13 +22,13 @@ func removeFile(w io.Writer, bucket, modulePath string) error {
 	defer cancel()
 
 	// Get info from petra config file
-	petraConf, err := getPetraConfig(modulePath)
+	petraConf, err := GetPetraConfig(modulePath)
 	if err != nil {
 		return fmt.Errorf("error: %v", err)
 	}
 
 	// Get full path of the tar.gz object in the bucket
-	object := getObjectPathFromConfig(petraConf)
+	object := GetObjectPathFromConfig(petraConf)
 	fmt.Printf("Object to delete: %v\n", object)
 
 	o := client.Bucket(bucket).Object(object)
