@@ -30,8 +30,6 @@ func executeCommandC(root *cobra.Command, args ...string) (c *cobra.Command, out
 
 // Tests
 func TestRootExecuteUnknownCommand(t *testing.T) {
-	rootCmd.AddCommand(UploadCmd())
-
 	output, err := executeCommand(rootCmd, "unknown")
 
 	fmt.Println(err)
