@@ -137,6 +137,7 @@ func TestUpdateSubCmdNoFlag(t *testing.T) {
 	fmt.Printf("\n")
 }
 
+// Upload in: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.tar.gz
 func TestUploadModule(t *testing.T) {
 	fmt.Println("=================================")
 	fmt.Println("test: TestUploadModule")
@@ -176,6 +177,121 @@ func TestUploadModule(t *testing.T) {
 	fmt.Printf("\n")
 }
 
+// Move
+// from: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.tar.gz
+// to: main/anotherModule/kubernetes/0.0.1/main-anotherModule-kubernetes-0.0.1.tar.gz
+func TestUpdateModule(t *testing.T) {
+	fmt.Println("=================================")
+	fmt.Println("test: TestUpdateModule")
+
+	bucket := "toltol-private-registry"
+	moduleDir := "../modules-example/rabbitmq/"
+
+	// Get previous petra config in ../modules-example/rabbitmq/.petra-config.yaml
+	prevConf, err := internal.GetPetraConfig(moduleDir)
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	fmt.Printf("prevConf: %v\n", prevConf)
+
+	name := "anotherModule"
+	version := "0.0.1"
+	provider := "kubernetes"
+	namespace := "main"
+	owner := "toto"
+	team := "prod"
+	// Exec: petra upload --gcs-bucket=toltol-private-registry --module-directory=../modules-example/rabbitmq
+	_, err = executeCommand(rootCmd, "update", "--gcs-bucket="+bucket, "--module-directory="+moduleDir, "--name="+name, "--version="+version, "--provider="+provider, "--namespace="+namespace, "--owner="+owner, "--team="+team)
+
+	// Get new petra config in ../modules-example/rabbitmq/.petra-config.yaml
+	newConf, err := internal.GetPetraConfig(moduleDir)
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	fmt.Printf("nextConf: %v\n", newConf)
+
+	// 1. Check that object was moved to the new location
+	// Get object path in Google Cloud Storage bucket from config
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	objectPath := internal.GetObjectPathFromConfig(newConf)
+	fmt.Println(objectPath)
+
+	// Get object attributes from Google Cloud Storage bucket
+	var buffer bytes.Buffer
+	objectAttrs, err := getMetadata(&buffer, bucket, objectPath)
+
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	fmt.Println(objectAttrs)
+
+	// 2. Check changes in petra config file
+	if newConf.Name != name || newConf.Namespace != namespace || newConf.Version != version || newConf.Provider != provider || newConf.Metadata.Owner != owner || newConf.Metadata.Team != team {
+		t.Errorf("\nerror: the new config file had not the latest changes.\n")
+	}
+
+	fmt.Println("=================================")
+	fmt.Printf("\n")
+}
+
+// Move
+// from: main/anotherModule/kubernetes/0.0.1/main-anotherModule-kubernetes-0.0.1.tar.gz
+// to: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.tar.gz
+func TestUpdateModule_2(t *testing.T) {
+	fmt.Println("=================================")
+	fmt.Println("test: TestUpdateModule")
+
+	bucket := "toltol-private-registry"
+	moduleDir := "../modules-example/rabbitmq/"
+
+	// Get previous petra config in ../modules-example/rabbitmq/.petra-config.yaml
+	prevConf, err := internal.GetPetraConfig(moduleDir)
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	fmt.Printf("prevConf: %v\n", prevConf)
+
+	name := "rabbitmq"
+	version := "0.0.2"
+	provider := "helm"
+	namespace := "staging"
+	owner := "Hyokil"
+	team := "GCP"
+	// Exec: petra upload --gcs-bucket=toltol-private-registry --module-directory=../modules-example/rabbitmq
+	_, err = executeCommand(rootCmd, "update", "--gcs-bucket="+bucket, "--module-directory="+moduleDir, "--name="+name, "--version="+version, "--provider="+provider, "--namespace="+namespace, "--owner="+owner, "--team="+team)
+
+	// Get new petra config in ../modules-example/rabbitmq/.petra-config.yaml
+	newConf, err := internal.GetPetraConfig(moduleDir)
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	fmt.Printf("nextConf: %v\n", newConf)
+
+	// 1. Check that object was moved to the new location
+	// Get object path in Google Cloud Storage bucket from config
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	objectPath := internal.GetObjectPathFromConfig(newConf)
+	fmt.Println(objectPath)
+
+	// Get object attributes from Google Cloud Storage bucket
+	var buffer bytes.Buffer
+	objectAttrs, err := getMetadata(&buffer, bucket, objectPath)
+
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	fmt.Println(objectAttrs)
+
+	// 2. Check changes in petra config file
+	if newConf.Name != name || newConf.Namespace != namespace || newConf.Version != version || newConf.Provider != provider || newConf.Metadata.Owner != owner || newConf.Metadata.Team != team {
+		t.Errorf("\nerror: the new config file had not the latest changes.\n")
+	}
+
+	fmt.Println("=================================")
+	fmt.Printf("\n")
+}
+
+// Remove: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.tar.gz
 func TestRemoveModule(t *testing.T) {
 	fmt.Println("=================================")
 	fmt.Println("test: TestRemoveModule")
@@ -211,39 +327,3 @@ func TestRemoveModule(t *testing.T) {
 	fmt.Println("=================================")
 	fmt.Printf("\n")
 }
-
-// func TestUpdateModule(t *testing.T) {
-// 	fmt.Println("=================================")
-// 	fmt.Println("test: TestUpdateModule")
-
-// 	// Exec: petra upload --gcs-bucket=toltol-private-registry --module-directory=../modules-example/rabbitmq
-// 	bucket := "toltol-private-registry"
-// 	moduleDir := "../modules-example/rabbitmq/"
-// 	_, err := executeCommand(rootCmd, "remove", "--gcs-bucket="+bucket, "--module-directory="+moduleDir)
-
-// 	// Get petra config in ../modules-example/rabbitmq/.petra-config.yaml
-// 	conf, err := internal.GetPetraConfig(moduleDir)
-// 	if err != nil {
-// 		t.Errorf("error: %v", err)
-// 	}
-// 	fmt.Println(conf)
-
-// 	// Get object path in Google Cloud Storage bucket from config
-// 	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
-// 	objectPath := internal.GetObjectPathFromConfig(conf)
-// 	fmt.Println(objectPath)
-
-// 	// Get object attributes from Google Cloud Storage bucket
-// 	var buffer bytes.Buffer
-// 	_, err = getMetadata(&buffer, bucket, objectPath)
-
-// 	expected := `Object("` + objectPath + `").Attrs: storage: object doesn't exist`
-
-// 	// Must return a error: the object doesn't exist because we removed it
-// 	if err == nil || err.Error() != expected {
-// 		t.Errorf("\nExpected:\n %q\nGot:\n %q\n", expected, err.Error())
-// 	}
-
-// 	fmt.Println("=================================")
-// 	fmt.Printf("\n")
-// }
