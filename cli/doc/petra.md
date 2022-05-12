@@ -7,7 +7,7 @@ Private terraform registry cli
 CLI to manage terraform modules in our private registry in a Google Cloud Storage bucket.
 
 ```
-petra [flags]
+petractl [flags]
 ```
 
 ### Options
@@ -20,7 +20,7 @@ petra [flags]
 
 ### SEE ALSO
 
-* [petra remove](petra_remove.md)	 - Remove the module from a private registry
-* [petra update](petra_update.md)	 - Update one or multiple config values of a module.
-* [petra upload](petra_upload.md)	 - Upload a terraform module to a private registry
+* [petractl remove](petra_remove.md)	 - Remove the module from a private registry
+* [petractl update](petra_update.md)	 - Update one or multiple config values of a module.
+* [petractl upload](petra_upload.md)	 - Upload a terraform module to a private registry
 
