@@ -9,7 +9,7 @@ Remove the module from a private registry.
 			2. Remove the {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz from the Google Cloud Storage bucket.
 
 ```
-petra remove [flags]
+petractl remove [flags]
 ```
 
 ### Options
@@ -27,5 +27,5 @@ petra remove [flags]
 
 ### SEE ALSO
 
-* [petra](petra.md)	 - Private terraform registry cli
+* [petractl](petra.md)	 - Private terraform registry cli
 
