@@ -9,7 +9,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "petra",
+	Use:   "petractl",
 	Short: "Private terraform registry cli",
 	Long:  "CLI to manage terraform modules in our private registry in a Google Cloud Storage bucket.",
 	RunE: func(cmd *cobra.Command, args []string) error {
