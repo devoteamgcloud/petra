@@ -146,6 +146,9 @@ func TestUploadModule(t *testing.T) {
 	bucket := "toltol-private-registry"
 	moduleDir := "../modules-example/rabbitmq/"
 	_, err := executeCommand(rootCmd, "upload", "--gcs-bucket="+bucket, "--module-directory="+moduleDir)
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
 
 	// Get petra config in ../modules-example/rabbitmq/.petra-config.yaml
 	conf, err := internal.GetPetraConfig(moduleDir)
@@ -202,6 +205,9 @@ func TestUpdateModule(t *testing.T) {
 	team := "prod"
 	// Exec: petra upload --gcs-bucket=toltol-private-registry --module-directory=../modules-example/rabbitmq
 	_, err = executeCommand(rootCmd, "update", "--gcs-bucket="+bucket, "--module-directory="+moduleDir, "--name="+name, "--version="+version, "--provider="+provider, "--namespace="+namespace, "--owner="+owner, "--team="+team)
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
 
 	// Get new petra config in ../modules-example/rabbitmq/.petra-config.yaml
 	newConf, err := internal.GetPetraConfig(moduleDir)
@@ -259,7 +265,10 @@ func TestUpdateModule_2(t *testing.T) {
 	team := "GCP"
 	// Exec: petra upload --gcs-bucket=toltol-private-registry --module-directory=../modules-example/rabbitmq
 	_, err = executeCommand(rootCmd, "update", "--gcs-bucket="+bucket, "--module-directory="+moduleDir, "--name="+name, "--version="+version, "--provider="+provider, "--namespace="+namespace, "--owner="+owner, "--team="+team)
-
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	
 	// Get new petra config in ../modules-example/rabbitmq/.petra-config.yaml
 	newConf, err := internal.GetPetraConfig(moduleDir)
 	if err != nil {
