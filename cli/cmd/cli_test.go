@@ -312,7 +312,7 @@ func TestRemoveModule(t *testing.T) {
 	if err != nil {
 		t.Errorf("error: %v", err)
 	}
-	
+
 	// Get petra config in ../modules-example/rabbitmq/.petra-config.yaml
 	conf, err := internal.GetPetraConfig(moduleDir)
 	if err != nil {
