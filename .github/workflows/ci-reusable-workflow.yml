@@ -1,8 +1,5 @@
 name: Create and Publish Petra docker image (CLI and Server)
 
-# env:
-    # GOOGLE_APPLICATION_CREDENTIALS: key.json
-
 on:
   workflow_call:
     inputs:
