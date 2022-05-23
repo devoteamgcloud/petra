@@ -68,10 +68,13 @@ jobs:
         with:
           go-version: ${{inputs.go-version}}
 
+      - name: "echo GOOGLE_APPLICATION_CREDENTIALS"
+        run: "echo $GOOGLE_APPLICATION_CREDENTIALS"
+        
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json:  ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+          credentials_json:  '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v0'
