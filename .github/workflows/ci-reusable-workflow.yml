@@ -1,6 +1,6 @@
 name: Create and Publish Petra docker image (CLI and Server)
 
-env:
+# env:
     # GOOGLE_APPLICATION_CREDENTIALS: key.json
 
 on:
