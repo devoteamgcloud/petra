@@ -268,7 +268,7 @@ func TestUpdateModule_2(t *testing.T) {
 	if err != nil {
 		t.Errorf("error: %v", err)
 	}
-	
+
 	// Get new petra config in ../modules-example/rabbitmq/.petra-config.yaml
 	newConf, err := internal.GetPetraConfig(moduleDir)
 	if err != nil {
@@ -309,7 +309,10 @@ func TestRemoveModule(t *testing.T) {
 	bucket := "toltol-private-registry"
 	moduleDir := "../modules-example/rabbitmq/"
 	_, err := executeCommand(rootCmd, "remove", "--gcs-bucket="+bucket, "--module-directory="+moduleDir)
-
+	if err != nil {
+		t.Errorf("error: %v", err)
+	}
+	
 	// Get petra config in ../modules-example/rabbitmq/.petra-config.yaml
 	conf, err := internal.GetPetraConfig(moduleDir)
 	if err != nil {
