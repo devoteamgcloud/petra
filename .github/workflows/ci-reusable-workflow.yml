@@ -12,6 +12,9 @@ on:
       go-version:
         required: true
         type: string
+      gcp-credentials:
+        required: true
+        type: string
 
 jobs:
   ci:
