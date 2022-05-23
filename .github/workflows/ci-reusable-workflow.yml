@@ -33,9 +33,6 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: ${{inputs.go-version}}
-
-      - name: "echo GOOGLE_APPLICATION_CREDENTIALS"
-        run: "echo $GOOGLE_APPLICATION_CREDENTIALS"
         
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'
@@ -82,9 +79,6 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: ${{inputs.go-version}}
-
-      - name: "echo GOOGLE_APPLICATION_CREDENTIALS"
-        run: "echo $GOOGLE_APPLICATION_CREDENTIALS"
 
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'
