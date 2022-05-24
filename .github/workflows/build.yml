@@ -13,8 +13,12 @@ jobs:
     with:
       working-directory: ./server
       go-version: 1.17
+    secrets:  
+      GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCP_SA_KEY }}'
   cli-ci-and-release:
     uses: ./.github/workflows/ci-reusable-workflow.yml
     with:
       working-directory: ./cli
       go-version: 1.18
+    secrets:  
+      GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCP_SA_KEY }}'

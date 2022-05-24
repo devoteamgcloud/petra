@@ -6,7 +6,7 @@ dev: clean install generate vet fmt lint test mod-tidy
 
 .PHONY: ci
 ci: ## CI build
-ci: dev diff
+ci: dev
 
 .PHONY: clean
 clean: ## remove files created during build pipeline
@@ -51,11 +51,13 @@ mod-tidy: ## go mod tidy
 	go mod tidy
 	cd tools && go mod tidy
 
-.PHONY: diff
-diff: ## git diff
-	$(call print-target)
-	git diff --exit-code
-	RES=$$(git status --porcelain) ; if [ -n "$$RES" ]; then echo $$RES && exit 1 ; fi
+# It always fail because the CI create the GCP credentials file
+
+# .PHONY: diff
+# diff: ## git diff
+# 	$(call print-target)
+# 	git diff --exit-code
+# 	RES=$$(git status --porcelain) ; if [ -n "$$RES" ]; then echo $$RES && exit 1 ; fi
 
 .PHONY: build
 build: ## goreleaser --snapshot --skip-publish --rm-dist

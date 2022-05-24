@@ -28,7 +28,7 @@ func editConfigFile(config *PetraConfig, modulePath string) error {
 	return nil
 }
 
-func getPetraConfig(modulePath string) (*PetraConfig, error) {
+func GetPetraConfig(modulePath string) (*PetraConfig, error) {
 	config := PetraConfig{}
 	configPath := modulePath + petraConfigFileName
 
@@ -61,7 +61,7 @@ func getPetraConfig(modulePath string) (*PetraConfig, error) {
 	return &config, nil
 }
 
-func getObjectPathFromConfig(petraConf *PetraConfig) string {
+func GetObjectPathFromConfig(petraConf *PetraConfig) string {
 	// {namespace}/{module}/{provider}/
 	objectDirectory := petraConf.Namespace + "/" + petraConf.Name + "/" + petraConf.Provider + "/" + petraConf.Version + "/"
 	// {namespace}-{module}-{provider}-{version}.tar.gz
