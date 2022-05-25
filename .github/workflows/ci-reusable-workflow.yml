@@ -109,13 +109,9 @@ jobs:
           fetch-depth: 0
       - name: Set up Go
         uses: actions/setup-go@v3
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v3
-        with:
-          # either 'goreleaser' (default) or 'goreleaser-pro'
-          distribution: goreleaser
-          version: latest
-          args: release -f .goreleaser.yml --rm-dist
+
+      - name: Make release
+        run: make release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - uses: actions/checkout@v3
