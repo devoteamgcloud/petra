@@ -2,6 +2,7 @@ before:
   hooks:
     - go mod download
 builds:
+  binary: petra
 - env:
     - CGO_ENABLED=0
   goos:
@@ -9,6 +10,9 @@ builds:
   goarch:
     - amd64
 release:
+  github:
+    owner: devoteamgcloud
+    name: petra
   prerelease: auto
 dockers:
   -
