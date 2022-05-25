@@ -103,21 +103,36 @@ jobs:
       run:
         working-directory: ${{inputs.working-directory}}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: Fetch all tags
-        run: git fetch --force --tags
-
-      - uses: actions/setup-go@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v3
         with:
-          go-version: ${{inputs.go-version}}
-
-      - name: "Docker login"
-        run: docker login docker.pkg.github.com -u docker -p ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Release
-        run: make release
+          # either 'goreleaser' (default) or 'goreleaser-pro'
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: actions/checkout@v3
+      #   with:
+      #     fetch-depth: 0
+
+      # - name: Fetch all tags
+      #   run: git fetch --force --tags
+
+      # - uses: actions/setup-go@v3
+      #   with:
+      #     go-version: ${{inputs.go-version}}
+
+      # - name: "Docker login"
+      #   run: docker login docker.pkg.github.com -u docker -p ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Release
+      #   run: make release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
