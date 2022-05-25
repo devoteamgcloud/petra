@@ -1,9 +1,10 @@
 name: release
 
 on:
-  push:
-    branches:
-      - main
+  push: 
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
     tags:
       - 'v*'
 
