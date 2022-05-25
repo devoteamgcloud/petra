@@ -97,7 +97,7 @@ jobs:
   goreleaser:
     needs: [tests-and-build]
     # make release on main branch only
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/release'
     runs-on: ubuntu-20.04
     defaults:
       run:
