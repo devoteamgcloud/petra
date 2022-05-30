@@ -2,8 +2,9 @@ before:
   hooks:
     - go mod download
 builds:
-  - binary: petractl
-  - env:
+  - id: petractl
+    binary: petractl
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
