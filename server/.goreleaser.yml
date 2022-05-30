@@ -3,12 +3,12 @@ before:
     - go mod download
 builds:
   - binary: petra
-- env:
-    - CGO_ENABLED=0
-  goos:
-    - linux
-  goarch:
-    - amd64
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
 release:
   github:
     owner: devoteamgcloud

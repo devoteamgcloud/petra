@@ -3,13 +3,13 @@ before:
     - go mod download
 builds:
   - binary: petractl
-- env:
-    - CGO_ENABLED=0
-  goos:
-    - linux
-    - darwin
-  goarch:
-    - amd64
-    - arm64
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
 release:
   prerelease: auto
