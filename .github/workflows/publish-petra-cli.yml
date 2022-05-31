@@ -9,9 +9,6 @@ on:
       go-version:
         required: true
         type: string
-    secrets:
-      GOOGLE_APPLICATION_CREDENTIALS:
-        description: "Google application credentials
 
 jobs:
   ci:
