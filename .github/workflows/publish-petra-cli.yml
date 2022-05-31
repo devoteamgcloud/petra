@@ -11,7 +11,7 @@ on:
         type: string
 
 jobs:
-  ci:
+  publish-petra-cli:
     strategy:
       fail-fast: false
       matrix:
@@ -21,14 +21,14 @@ jobs:
       run:
         shell: bash
         working-directory: ${{inputs.working-directory}}
-  goreleaser:
-    needs: [tests-and-build]
-    # make release on main branch only
-    # if: github.ref == 'refs/heads/release'
-    runs-on: ubuntu-20.04
-    defaults:
-      run:
-        working-directory: ${{inputs.working-directory}}
+#  goreleaser:
+#    needs: [tests-and-build]
+#    # make release on main branch only
+#    # if: github.ref == 'refs/heads/release'
+#    runs-on: ubuntu-20.04
+#    defaults:
+#      run:
+#        working-directory: ${{inputs.working-directory}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
