@@ -1,0 +1,52 @@
+name: Create and Publish PetraCLI
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        required: true
+        type: string
+      go-version:
+        required: true
+        type: string
+    secrets:
+      GOOGLE_APPLICATION_CREDENTIALS:
+        description: "Google application credentials
+
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{inputs.working-directory}}
+  goreleaser:
+    needs: [tests-and-build]
+    # make release on main branch only
+    # if: github.ref == 'refs/heads/release'
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ${{inputs.working-directory}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v3
+
+      - name: Create release with goreleaser
+        uses: goreleaser/goreleaser-action@v3
+        with:
+          # either 'goreleaser' (default) or 'goreleaser-pro'
+          workdir: ${{inputs.working-directory}}
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
