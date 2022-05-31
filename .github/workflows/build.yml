@@ -32,7 +32,7 @@ jobs:
     secrets:  
       GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCP_SA_KEY }}'
   cli-publish-docker-image:
-    uses: ./.github/workflows/publish-petra-clo.yml
+    uses: ./.github/workflows/publish-petra-cli.yml
     with:
       working-directory: ./cli
       go-version: 1.18
