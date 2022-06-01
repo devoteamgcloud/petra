@@ -88,10 +88,10 @@ jobs:
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
 
-      - name: Run tests
+      - name: Make test
         run: make test
 
-      - name: Release test
+      - name: Make build
         run: make build
 
 #  goreleaser:
