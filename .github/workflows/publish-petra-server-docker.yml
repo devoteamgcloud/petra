@@ -10,7 +10,7 @@ on:
         required: true
         type: string
     secrets:
-      GITHUB_TOKEN:
+      MY_GITHUB_TOKEN:
         description: "Github token"
 
 jobs:
@@ -44,7 +44,7 @@ jobs:
           version: latest
           args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 # name: Create and publish Petra server docker image to ghcr
 
 # on:
