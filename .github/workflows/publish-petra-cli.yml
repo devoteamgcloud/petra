@@ -21,19 +21,12 @@ jobs:
       run:
         shell: bash
         working-directory: ${{inputs.working-directory}}
-#  goreleaser:
-#    needs: [tests-and-build]
-#    # make release on main branch only
-#    # if: github.ref == 'refs/heads/release'
-#    runs-on: ubuntu-20.04
-#    defaults:
-#      run:
-#        working-directory: ${{inputs.working-directory}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+  
       - name: Set up Go
         uses: actions/setup-go@v3
 
