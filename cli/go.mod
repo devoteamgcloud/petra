@@ -5,7 +5,7 @@ go 1.18
 require (
 	cloud.google.com/go/storage v1.22.1
 	github.com/spf13/cobra v1.4.0
-	gopkg.in/yaml.v2 v2.4.0
+	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
 )
 
 require (
@@ -33,4 +33,5 @@ require (
 	google.golang.org/genproto v0.0.0-20220518221133-4f43b3371335 // indirect
 	google.golang.org/grpc v1.46.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
