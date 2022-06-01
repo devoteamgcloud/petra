@@ -2,9 +2,11 @@ name: Create and Publish Petra docker image to ghcr.io
 
 on:
   push: 
+    branches: [ main ]
     tags:
       - 'v*'
   pull_request:
+    branches: [ main ]
     tags:
       - 'v*'
 
