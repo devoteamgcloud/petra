@@ -19,11 +19,11 @@ jobs:
       go-version: 1.17
     secrets:  
       GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCP_SA_KEY }}'
-  server-publish:
-    uses: ./.github/workflows/publish-petra-server-docker.yml
-    with:
-      working-directory: ./server
-      go-version: 1.17
+  # server-publish:
+  #   uses: ./.github/workflows/publish-petra-server-docker.yml
+  #   with:
+  #     working-directory: ./server
+  #     go-version: 1.17
   cli-build-and-test:
     uses: ./.github/workflows/ci-reusable-workflow.yml
     with:
@@ -32,6 +32,7 @@ jobs:
     secrets:  
       GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GCP_SA_KEY }}'
   cli-publish-docker-image:
+    # needs: [cli-build-and-tes]
     uses: ./.github/workflows/publish-petra-cli.yml
     with:
       working-directory: ./cli
