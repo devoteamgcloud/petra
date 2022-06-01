@@ -13,6 +13,10 @@ on:
     #   MY_GITHUB_TOKEN:
     #     description: "Github token"
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: petra
+
 jobs:
   publish-petra-server:
     strategy:
