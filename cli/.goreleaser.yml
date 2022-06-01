@@ -1,3 +1,4 @@
+project_name: petractl
 before:
   hooks:
     - go mod download
