@@ -24,6 +24,8 @@ jobs:
     with:
       working-directory: ./server
       go-version: 1.17
+    secrets:  
+     GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GITHUB_TOKEN }}'
   # cli-build-and-test:
   #   uses: ./.github/workflows/ci-reusable-workflow.yml
   #   with:

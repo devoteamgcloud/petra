@@ -9,6 +9,9 @@ on:
       go-version:
         required: true
         type: string
+    secrets:
+      GITHUB_TOKEN:
+        description: "Github token"
 
 jobs:
   publish-petra-server:
