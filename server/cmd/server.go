@@ -53,16 +53,6 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&flagSecretID, "secret-id", "", "(Google Cloud Secret Manager) Secret ID of your service-account that allows you to generate signed URLs.")
 
 	rootCmd.PersistentFlags().StringVar(&flagListenAddr, "listen-address", "3000", "Address to listen on")
-
-	// Making Flags required
-	err := rootCmd.MarkPersistentFlagRequired("project-id")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-	}
-	err = rootCmd.MarkPersistentFlagRequired("secret-id")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-	}
 }
 
 const (
