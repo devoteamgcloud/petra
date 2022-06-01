@@ -30,18 +30,18 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v3
 
-      - name: Make release
-        run: make release
-      # - name: Create release with goreleaser
-      #   uses: goreleaser/goreleaser-action@v3
-      #   with:
-      #     # either 'goreleaser' (default) or 'goreleaser-pro'
-      #     workdir: ${{inputs.working-directory}}
-      #     distribution: goreleaser
-      #     version: latest
-      #     args: release --rm-dist
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Make release
+      #   run: make release
+      - name: Create release with goreleaser
+        uses: goreleaser/goreleaser-action@v3
+        with:
+          # either 'goreleaser' (default) or 'goreleaser-pro'
+          workdir: ${{inputs.working-directory}}
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # name: Create and publish Petra server docker image to ghcr
 
 # on:
