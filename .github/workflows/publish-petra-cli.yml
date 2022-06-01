@@ -11,7 +11,7 @@ on:
       - 'v*'
 
 env:
-  WORKING_DIRECTORY: ./server
+  WORKING_DIRECTORY: ./cli
 
 jobs:
   publish-petra-cli:
