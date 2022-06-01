@@ -24,7 +24,7 @@ builds:
 #  draft: true
 
 dockers:
-  -
+  - dockerfile: ./server/Dockerfile
     image_templates:
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:latest"
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}"
