@@ -2,11 +2,9 @@ name: Create and Publish PetraCLI
 
 on:
   push: 
-    branches: [ main ]
     tags:
       - 'v*'
   pull_request:
-    branches: [ main ]
     tags:
       - 'v*'
 
