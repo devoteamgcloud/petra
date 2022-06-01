@@ -26,10 +26,10 @@ builds:
 dockers:
   -
     image_templates:
-    - "ghcr.io/devoteamgcloud/petra/{{ .ProjectName }}:latest"
-    - "ghcr.io/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}"
-    - "ghcr.io/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
-    - "ghcr.io/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:latest"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
