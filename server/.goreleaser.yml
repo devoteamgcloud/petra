@@ -13,10 +13,10 @@ builds:
       - amd64
       - arm64
 release:
- github:
+  github:
   # don't publish new release for petra server
   # only for petractl
-  disable: true
+    disable: true
 
 dockers:
   -
