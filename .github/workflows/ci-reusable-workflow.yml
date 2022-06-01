@@ -63,7 +63,7 @@ jobs:
           file: ./coverage.out
           flags: ${{ runner.os }}
 
-  release-test:
+  tests-and-build:
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -88,8 +88,8 @@ jobs:
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
 
-      - name: Run tests
+      - name: Make test
         run: make test
 
-      - name: Release test
+      - name: Make build
         run: make build

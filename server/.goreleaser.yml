@@ -2,21 +2,28 @@ before:
   hooks:
     - go mod download
 builds:
-- env:
-    - CGO_ENABLED=0
-  goos:
-    - linux
-  goarch:
-    - amd64
+  - id: petra
+    binary: petra
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
 release:
-  prerelease: auto
+  # don't publish new release for petra server
+  # only for petractl
+  disable: true
+
 dockers:
   -
     image_templates:
-    - "docker.pkg.github.com/devoteamgcloud/petra/{{ .ProjectName }}:latest"
-    - "docker.pkg.github.com/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}"
-    - "docker.pkg.github.com/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
-    - "docker.pkg.github.com/devoteamgcloud/petra/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:latest"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
