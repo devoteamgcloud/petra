@@ -17,7 +17,7 @@ env:
 
 jobs:
   publish-petra-server:
-    needs: [server-build-and-test]
+    # needs: [server-build-and-test]
     strategy:
       fail-fast: false
       matrix:
