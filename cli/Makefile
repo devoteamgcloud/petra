@@ -37,7 +37,7 @@ fmt: ## go fmt
 .PHONY: lint
 lint: ## golangci-lint
 	$(call print-target)
-	golangci-lint run
+	golangci-lint run --go=1.18
 
 .PHONY: test
 test: ## go test with race detector and code covarage
