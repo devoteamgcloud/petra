@@ -83,7 +83,7 @@ func TestRootExecuteUnknownCommand(t *testing.T) {
 	output, err := executeCommand(rootCmd, "unknown")
 
 	fmt.Println(err)
-	expected := "Error: unknown command \"unknown\" for \"petra\"\nRun 'petra --help' for usage.\n"
+	expected := "Error: unknown command \"unknown\" for \"petractl\"\nRun 'petractl --help' for usage.\n"
 
 	if output != expected {
 		t.Errorf("\nExpected:\n %q\nGot:\n %q\n", expected, output)
@@ -137,7 +137,7 @@ func TestUpdateSubCmdNoFlag(t *testing.T) {
 	fmt.Printf("\n")
 }
 
-// Upload in: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.tar.gz
+// Upload in: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.zip
 func TestUploadModule(t *testing.T) {
 	fmt.Println("=================================")
 	fmt.Println("test: TestUploadModule")
@@ -158,7 +158,7 @@ func TestUploadModule(t *testing.T) {
 	fmt.Println(conf)
 
 	// Get object path in Google Cloud Storage bucket from config
-	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.zip
 	objectPath := internal.GetObjectPathFromConfig(conf)
 	fmt.Println(objectPath)
 
@@ -181,8 +181,8 @@ func TestUploadModule(t *testing.T) {
 }
 
 // Move
-// from: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.tar.gz
-// to: main/anotherModule/kubernetes/0.0.1/main-anotherModule-kubernetes-0.0.1.tar.gz
+// from: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.zip
+// to: main/anotherModule/kubernetes/0.0.1/main-anotherModule-kubernetes-0.0.1.zip
 func TestUpdateModule(t *testing.T) {
 	fmt.Println("=================================")
 	fmt.Println("test: TestUpdateModule")
@@ -218,7 +218,7 @@ func TestUpdateModule(t *testing.T) {
 
 	// 1. Check that object was moved to the new location
 	// Get object path in Google Cloud Storage bucket from config
-	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.zip
 	objectPath := internal.GetObjectPathFromConfig(newConf)
 	fmt.Println(objectPath)
 
@@ -241,8 +241,8 @@ func TestUpdateModule(t *testing.T) {
 }
 
 // Move
-// from: main/anotherModule/kubernetes/0.0.1/main-anotherModule-kubernetes-0.0.1.tar.gz
-// to: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.tar.gz
+// from: main/anotherModule/kubernetes/0.0.1/main-anotherModule-kubernetes-0.0.1.zip
+// to: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.zip
 func TestUpdateModule_2(t *testing.T) {
 	fmt.Println("=================================")
 	fmt.Println("test: TestUpdateModule")
@@ -278,7 +278,7 @@ func TestUpdateModule_2(t *testing.T) {
 
 	// 1. Check that object was moved to the new location
 	// Get object path in Google Cloud Storage bucket from config
-	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.zip
 	objectPath := internal.GetObjectPathFromConfig(newConf)
 	fmt.Println(objectPath)
 
@@ -300,7 +300,7 @@ func TestUpdateModule_2(t *testing.T) {
 	fmt.Printf("\n")
 }
 
-// Remove: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.tar.gz
+// Remove: staging/rabbitmq/helm/0.0.2/staging-rabbitmq-helm-0.0.2.zip
 func TestRemoveModule(t *testing.T) {
 	fmt.Println("=================================")
 	fmt.Println("test: TestRemoveModule")
@@ -321,7 +321,7 @@ func TestRemoveModule(t *testing.T) {
 	fmt.Println(conf)
 
 	// Get object path in Google Cloud Storage bucket from config
-	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.zip
 	objectPath := internal.GetObjectPathFromConfig(conf)
 	fmt.Println(objectPath)
 

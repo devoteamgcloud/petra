@@ -1,4 +1,4 @@
-## petra update
+## petractl update
 
 Update one or multiple config values of a module.
 
@@ -6,12 +6,12 @@ Update one or multiple config values of a module.
 
 Update one or multiple config values of a module.
 			1. Get config values passed as arguments to petra.
-			2. Make changes to {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz in the Google Cloud Storage bucket.
+			2. Make changes to {namespace}-{module}-{version}/{namespace}-{module}-{version}.zip in the Google Cloud Storage bucket.
 			3. Make changes to the local .petra-config.yaml of the local module
 	
 
 ```
-petra update [flags]
+petractl update [flags]
 ```
 
 ### Options
@@ -35,5 +35,5 @@ petra update [flags]
 
 ### SEE ALSO
 
-* [petra](petra.md)	 - Private terraform registry cli
+* [petractl](petractl.md)	 - Private terraform registry cli
 

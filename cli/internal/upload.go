@@ -98,7 +98,7 @@ func uploadFile(w io.Writer, bucket string, zipFilePath string, petraConf *Petra
 	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
 	defer cancel()
 
-	// create a temporary file for the .tar.gz file
+	// create a temporary file for the .zip file
 	f, err := os.Open(zipFilePath)
 	if err != nil {
 		return fmt.Errorf("os.Open: %v", err)

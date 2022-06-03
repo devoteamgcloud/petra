@@ -27,7 +27,7 @@ func removeFile(w io.Writer, bucket, modulePath string) error {
 		return fmt.Errorf("error: %v", err)
 	}
 
-	// Get full path of the tar.gz object in the bucket
+	// Get full path of the .zip object in the bucket
 	object := GetObjectPathFromConfig(petraConf)
 	fmt.Printf("Object to delete: %v\n", object)
 

@@ -1,4 +1,4 @@
-## petra remove
+## petractl remove
 
 Remove the module from a private registry
 
@@ -6,10 +6,10 @@ Remove the module from a private registry
 
 Remove the module from a private registry.
 			1. Read the value from .petra-config.yaml of the local module
-			2. Remove the {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz from the Google Cloud Storage bucket.
+			2. Remove the {namespace}-{module}-{version}/{namespace}-{module}-{version}.zip from the Google Cloud Storage bucket.
 
 ```
-petra remove [flags]
+petractl remove [flags]
 ```
 
 ### Options
@@ -27,5 +27,5 @@ petra remove [flags]
 
 ### SEE ALSO
 
-* [petra](petra.md)	 - Private terraform registry cli
+* [petractl](petractl.md)	 - Private terraform registry cli
 
