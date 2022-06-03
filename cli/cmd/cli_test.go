@@ -83,7 +83,7 @@ func TestRootExecuteUnknownCommand(t *testing.T) {
 	output, err := executeCommand(rootCmd, "unknown")
 
 	fmt.Println(err)
-	expected := "Error: unknown command \"unknown\" for \"petra\"\nRun 'petra --help' for usage.\n"
+	expected := "Error: unknown command \"unknown\" for \"petractl\"\nRun 'petractl --help' for usage.\n"
 
 	if output != expected {
 		t.Errorf("\nExpected:\n %q\nGot:\n %q\n", expected, output)
