@@ -15,8 +15,8 @@ var uploadCmd = &cobra.Command{
 	Long: `Compress a local Terraform module and upload to a private registry.
 			1. Each module must have a .petra-config.yaml
 			2. Read the values of the config file
-			3. Compress all module's files, generate a {namespace}-{module}-{version}-tar.gz file and upload it to the private registry.
-			4. Path of the object in the Google Cloud Storage bucket: {namespace}-{module}-{version}/{namespace}-{module}-{version}-tar.gz
+			3. Compress all module's files, generate a {namespace}-{module}-{version}.zip file and upload it to the private registry.
+			4. Path of the object in the Google Cloud Storage bucket: {namespace}-{module}-{version}/{namespace}-{module}-{version}.zip
 		`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := upload(); err != nil {

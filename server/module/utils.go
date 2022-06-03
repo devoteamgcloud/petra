@@ -11,7 +11,7 @@ func modPath(mod Module) string {
 		mod.Name,
 		mod.Provider,
 		mod.Version,
-		fmt.Sprintf("%s-%s-%s-%s.tar.gz", mod.Namespace, mod.Name, mod.Provider, mod.Version),
+		fmt.Sprintf("%s-%s-%s-%s.zip", mod.Namespace, mod.Name, mod.Provider, mod.Version),
 	)
 }
 

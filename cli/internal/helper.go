@@ -64,10 +64,10 @@ func GetPetraConfig(modulePath string) (*PetraConfig, error) {
 func GetObjectPathFromConfig(petraConf *PetraConfig) string {
 	// {namespace}/{module}/{provider}/
 	objectDirectory := petraConf.Namespace + "/" + petraConf.Name + "/" + petraConf.Provider + "/" + petraConf.Version + "/"
-	// {namespace}-{module}-{provider}-{version}.tar.gz
-	object := petraConf.Namespace + "-" + petraConf.Name + "-" + petraConf.Provider + "-" + petraConf.Version + ".tar.gz"
+	// {namespace}-{module}-{provider}-{version}.zip
+	object := petraConf.Namespace + "-" + petraConf.Name + "-" + petraConf.Provider + "-" + petraConf.Version + ".zip"
 
-	// {namespace}/{module}/{provider}/{namespace}-{module}-{provider}-{version}.tar.gz
-	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	// {namespace}/{module}/{provider}/{namespace}-{module}-{provider}-{version}.zip
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.zip
 	return objectDirectory + object
 }

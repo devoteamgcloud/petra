@@ -111,7 +111,7 @@ func UpdateModule(bucket string, moduleDirectory string, flagConfig PetraConfig)
 	updateMetadata(currentConf, &newConf)
 	updateRequiredFields(currentConf, &newConf)
 
-	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.tar.gz
+	// e.g.: main/rabbitmq/helm/0.0.1/main-rabbitmq-helm-0.0.1.zip
 	currentObject := GetObjectPathFromConfig(currentConf)
 
 	// 2.1 Change object's metadata:
@@ -127,7 +127,7 @@ func UpdateModule(bucket string, moduleDirectory string, flagConfig PetraConfig)
 	// 2.2 Move object if we want to update one of the following field:
 	// - namespace | name | provider | version
 	// because they're part of the object's path:
-	// {namespace}/{module}/{provider}/{namespace}-{module}-{provider}-{version}.tar.gz
+	// {namespace}/{module}/{provider}/{namespace}-{module}-{provider}-{version}.zip
 	if flagConfig.Namespace != "" || flagConfig.Name != "" || flagConfig.Provider != "" || flagConfig.Version != "" {
 		var buffer bytes.Buffer
 
