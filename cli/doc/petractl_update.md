@@ -1,4 +1,4 @@
-## petra update
+## petractl update
 
 Update one or multiple config values of a module.
 
@@ -11,7 +11,7 @@ Update one or multiple config values of a module.
 	
 
 ```
-petra update [flags]
+petractl update [flags]
 ```
 
 ### Options
@@ -35,5 +35,5 @@ petra update [flags]
 
 ### SEE ALSO
 
-* [petra](petra.md)	 - Private terraform registry cli
+* [petractl](petractl.md)	 - Private terraform registry cli
 

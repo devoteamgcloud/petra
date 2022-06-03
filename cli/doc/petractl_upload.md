@@ -1,4 +1,4 @@
-## petra upload
+## petractl upload
 
 Upload a terraform module to a private registry
 
@@ -12,7 +12,7 @@ Compress a local Terraform module and upload to a private registry.
 		
 
 ```
-petra upload [flags]
+petractl upload [flags]
 ```
 
 ### Options
@@ -30,5 +30,5 @@ petra upload [flags]
 
 ### SEE ALSO
 
-* [petra](petra.md)	 - Private terraform registry cli
+* [petractl](petractl.md)	 - Private terraform registry cli
 
