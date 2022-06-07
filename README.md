@@ -31,6 +31,26 @@ Follow these steps if you are OK installing and using Go on your machine.
 ### Server
 * [petra server](server/doc/petra.md) - Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket).
 
+### Deploy Server on Cloud Run
+
+Cloud Run should have a service account with at least 2 permission:
+
+- Secret Manager Secret Accessor (access secret)
+- Storage Admin (access objets in bucket)
+
+Main.tf example to test the server:
+
+```terraform
+module "my_module" {
+  source  = "{CLOUD_RUN_URL}/{NAMESPACE}/{MODULE}/{PROVIDER}"
+  version = "{VERSION}"
+
+}
+```
+
+
+
+
 ## Release
 
 The release workflow is triggered each time a tag with `v` prefix is pushed.
