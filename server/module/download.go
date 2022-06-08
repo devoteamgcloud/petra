@@ -81,23 +81,37 @@ func (b *GCSBackend) getModule(mod Module, ctx context.Context) (string, error) 
 	fmt.Println("mod :", modPath(mod))
 	fmt.Println("context : ", ctx)
 
-	saKeyFile := getServiceAccountFromSecretManager()
+	var options *storage.SignedURLOptions
 
-	cfg, err := google.JWTConfigFromJSON(saKeyFile)
+	if secretManagerInfo.projectID != "" && secretManagerInfo.secretID != "" {
+		fmt.Println("Get secret from Secret Manager to create signed url")
+		saKeyFile := getServiceAccountFromSecretManager()
+
+		cfg, err := google.JWTConfigFromJSON(saKeyFile)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		options = &storage.SignedURLOptions{
+			GoogleAccessID: cfg.Email,
+			PrivateKey:     cfg.PrivateKey,
+			Method:         "GET",
+			Expires:        time.Now().Add(2 * time.Minute),
+		}
+	} else {
+		fmt.Println("Use existing credentials to create signed url")
+		options = &storage.SignedURLOptions{
+			Method:  "GET",
+			Expires: time.Now().Add(2 * time.Minute),
+		}
+	}
+
+	signedUrl, err := b.client.Bucket(b.bucket).SignedURL(modPath(mod), options)
 	if err != nil {
-		log.Fatalln(err)
+		return "", fmt.Errorf("Bucket(%q).SignedURL: %v", b.bucket, err)
 	}
 
-	opts := &storage.SignedURLOptions{
-		GoogleAccessID: cfg.Email,
-		PrivateKey:     cfg.PrivateKey,
-		Method:         "GET",
-		Expires:        time.Now().Add(2 * time.Minute),
-	}
-
-	signedUrl, err := b.client.Bucket(b.bucket).SignedURL(modPath(mod), opts)
-	if err != nil {
-		return "", err
-	}
+	fmt.Println("Generated GET signed URL:")
+	fmt.Printf("%q\n", signedUrl)
 	return fmt.Sprintln(signedUrl), nil
 }
