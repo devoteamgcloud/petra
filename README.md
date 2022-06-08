@@ -36,8 +36,14 @@ Follow these steps if you are OK installing and using Go on your machine.
 Cloud Run's service account these roles:
 
 - Secret Manager Secret Accessor (only if you specify `project_id` and `secret_id` flags)
-- Storage Admin (access objets in bucket)
 - Service Account Token Creator (create signed url)
+- Storage Object Admin (access objects in bucket) for a specific bucket:
+
+In GCP console, go to `IAM and admin` and `Edit permissions` of your service account, add a condition:
+
+- type: `resource/name`
+- operator: `starts with`
+- value: `projects/_/buckets/{BUCKET}`
 
 Main.tf example to test the server:
 
