@@ -33,9 +33,9 @@ Follow these steps if you are OK installing and using Go on your machine.
 
 ### Deploy Server on Cloud Run
 
-Cloud Run should have a service account with at least 2 permission:
+Cloud Run's service account these roles:
 
-- Secret Manager Secret Accessor (access secret)
+- Secret Manager Secret Accessor (only if you specify `project_id` and `secret_id` flags)
 - Storage Admin (access objets in bucket)
 - Service Account Token Creator (create signed url)
 
