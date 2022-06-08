@@ -81,7 +81,7 @@ func (b *GCSBackend) getModule(mod Module, ctx context.Context) (string, error) 
 	fmt.Println("mod :", modPath(mod))
 	fmt.Println("context : ", ctx)
 
-	var options = &storage.SignedURLOptions{}
+	var options *storage.SignedURLOptions
 
 	if secretManagerInfo.projectID != "" && secretManagerInfo.secretID != "" {
 		fmt.Println("Get secret from Secret Manager to create signed url")
