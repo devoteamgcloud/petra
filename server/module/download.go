@@ -100,19 +100,7 @@ func (b *GCSBackend) getModule(mod Module, ctx context.Context) (string, error) 
 		}
 	} else {
 		fmt.Println("Use existing credentials to create signed url")
-		// signedUrl, err := b.client.Bucket(b.bucket).SignedURL(modPath(mod), opts)
-		// if err != nil {
-		// 	return "", err
-		// }
-
-		// client, err := storage.NewClient(ctx)
-		// if err != nil {
-		// 		return "", fmt.Errorf("storage.NewClient: %v", err)
-		// }
-		// defer client.Close()
-
 		options = &storage.SignedURLOptions{
-			// Scheme:  storage.SigningSchemeV4,
 			Method:  "GET",
 			Expires: time.Now().Add(2 * time.Minute),
 		}
@@ -125,7 +113,5 @@ func (b *GCSBackend) getModule(mod Module, ctx context.Context) (string, error) 
 
 	fmt.Println("Generated GET signed URL:")
 	fmt.Printf("%q\n", signedUrl)
-	fmt.Println("You can use this URL with any user agent, for example:")
-	fmt.Printf("curl %q\n", signedUrl)
 	return fmt.Sprintln(signedUrl), nil
 }
