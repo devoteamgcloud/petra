@@ -37,6 +37,7 @@ Cloud Run should have a service account with at least 2 permission:
 
 - Secret Manager Secret Accessor (access secret)
 - Storage Admin (access objets in bucket)
+- Service Account Token Creator (create signed url)
 
 Main.tf example to test the server:
 
