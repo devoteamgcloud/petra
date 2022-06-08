@@ -51,8 +51,13 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&flagGCSBucket, "gcs-bucket", "", "Name of the Google Cloud Storage bucket you want to use for storage.")
 	rootCmd.PersistentFlags().StringVar(&flagProjetID, "project-id", "", "Google Cloud project ID where the service account is stored in Secret Manager.")
 	rootCmd.PersistentFlags().StringVar(&flagSecretID, "secret-id", "", "(Google Cloud Secret Manager) Secret ID of your service-account that allows you to generate signed URLs.")
-
 	rootCmd.PersistentFlags().StringVar(&flagListenAddr, "listen-address", "3000", "Address to listen on")
+
+	// Making Flags required
+	err := rootCmd.MarkPersistentFlagRequired("gcs-bucket")
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
 }
 
 const (
