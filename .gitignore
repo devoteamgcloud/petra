@@ -37,5 +37,5 @@ dist/
 # env files that usually contain secrets or local config
 .env
 .envrc
-
+gha-creds-*.json
 /server/storage-sa.json
