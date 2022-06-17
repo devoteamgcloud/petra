@@ -33,7 +33,20 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v3
 
-      
+      - name: Google Auth
+        id: google-auth
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.SA_GCP_ARTIFACT_REGISTRY}}''
+
+      - name: Artifact Registry Auth
+        id: artifact-registry-auth
+        uses: 'docker/login-action@v1'
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.google-auth.outputs.access_token }}'
+          registry: 'europe-west1-docker.pkg.dev'
+
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
