@@ -37,7 +37,7 @@ jobs:
         id: google-auth
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json: '${{ secrets.SA_GCP_ARTIFACT_REGISTRY}}''
+          credentials_json: '${{ secrets.SA_GCP_ARTIFACT_REGISTRY}}'
 
       - name: Artifact Registry Auth
         id: artifact-registry-auth
