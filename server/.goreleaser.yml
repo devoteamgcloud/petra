@@ -24,6 +24,10 @@ dockers:
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}"
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+    - "europe-west1-docker.pkg.dev/dgc-petra-registry-512a/dgc-registry/{{ .ProjectName }}:latest"
+    - "europe-west1-docker.pkg.dev/dgc-petra-registry-512a/dgc-registry/{{ .ProjectName }}:{{ .Major }}"
+    - "europe-west1-docker.pkg.dev/dgc-petra-registry-512a/dgc-registry/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
+    - "europe-west1-docker.pkg.dev/dgc-petra-registry-512a/dgc-registry/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
