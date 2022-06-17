@@ -10,7 +10,7 @@ on:
         required: true
         type: string
     secrets:
-      GOOGLE_APPLICATION_CREDENTIALS:
+      SA_GCP_ARTIFACT_REGISTRY:
         description: "Google application credentials"
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json:  '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+          credentials_json:  '${{ secrets.SA_GCP_ARTIFACT_REGISTRY }}'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v0'
@@ -80,7 +80,7 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json:  '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+          credentials_json:  '${{ secrets.SA_GCP_ARTIFACT_REGISTRY }}'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v0'
