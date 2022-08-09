@@ -3,7 +3,7 @@ module github.com/arthur-laurentdka/petra/server
 go 1.17
 
 require (
-	cloud.google.com/go/secretmanager v1.4.0
+	cloud.google.com/go/secretmanager v1.5.0
 	cloud.google.com/go/storage v1.24.0
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/spf13/cobra v1.4.0
