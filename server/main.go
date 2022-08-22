@@ -1,7 +1,15 @@
 package main
 
-import "github.com/arthur-laurentdka/petra/server/cmd"
+import (
+	"fmt"
+	"os"
+
+	server "github.com/arthur-laurentdka/petra/server/cmd"
+)
 
 func main() {
-	cmd.Execute()
+	err := server.Run()
+	if err != nil {
+		fmt.Fprint(os.Stderr, err)
+	}
 }
