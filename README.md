@@ -12,7 +12,6 @@ Follow these steps if you are OK installing and using Go on your machine.
 1. Clone and open this repository.
 1. `F1` -> `Go: Install/Update Tools` -> (select all) -> OK.
 
-
 ## Build
 
 ### Terminal
@@ -27,36 +26,49 @@ Follow these steps if you are OK installing and using Go on your machine.
 ## Documentation
 
 ### CLI
-* [petra cli](cli/doc/petra.md) - CLI to upload / remove / upload a terraform module to a private registry (Google Cloud Storage bucket).
+
+- [petra cli](cli/doc/petra.md) - CLI to upload / remove / upload a terraform module to a private registry (Google Cloud Storage bucket).
+
 ### Server
-* [petra server](server/doc/petra.md) - Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket).
 
-### Deploy Server on Cloud Run
+- [petra server](server/doc/petra.md) - Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket).
 
-Cloud Run's service account these roles:
+#### Env var
 
-- Secret Manager Secret Accessor (only if you specify `project_id` and `secret_id` flags)
+- `GCS_BUCKET`: bucket with terraform modules
+- `LISTEN_ADDRESS`: server port
+
+#### Deploy Server on Cloud Run
+
+Cloud Run's service account must have the following roles:
+
 - Service Account Token Creator (create signed url)
-- Storage Object Admin (access objects in bucket) for a specific bucket:
+- Storage Object Admin (access objects in bucket) for the bucket where you store the terraform modules.
 
-In GCP console, go to `IAM and admin` and `Edit permissions` of your service account, add a condition:
-
-- type: `resource/name`
-- operator: `starts with`
-- value: `projects/_/buckets/{BUCKET}`
-
-Main.tf example to test the server:
+Then `terraform init`:
 
 ```terraform
+// main.tf
 module "my_module" {
-  source  = "{CLOUD_RUN_URL}/{NAMESPACE}/{MODULE}/{PROVIDER}"
-  version = "{VERSION}"
-
+  source  = "{CLOUD_RUN_URL}:{PORT}/{NAMESPACE}/{MODULE}/{PROVIDER}/{VERSION}/download"
 }
 ```
 
+#### Deploy Server on GKE with Workload Identity
 
+Activate [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) and the service account must have the following roles:
 
+- Service Account Token Creator (create signed url)
+- Storage Object Admin (access objects in bucket) for the bucket where you store the terraform modules
+
+Then `terraform init`:
+
+```terraform
+// main.tf
+module "my_module" {
+  source  = "{PETRA_SERVER}:{PORT}/{NAMESPACE}/{MODULE}/{PROVIDER}/{VERSION}/download"
+}
+```
 
 ## Release
 
@@ -66,7 +78,7 @@ _CAUTION_: Make sure to understand the consequences before you bump the major ve
 
 ## Maintainance
 
-Remember to update Go version in [.github/workflows](.github/workflows) and [Makefile](Makefile). 
+Remember to update Go version in [.github/workflows](.github/workflows) and [Makefile](Makefile).
 
 Notable files:
 
@@ -85,7 +97,6 @@ Notable files:
 Developers that use Visual Studio Code can take advantage of the editor configuration. While others do not have to care about it. Setting configs for each repo is unnecessary time consuming. VS Code is the most popular Go editor ([survey](https://blog.golang.org/survey2019-results)) and it is officially [supported by the Go team](https://blog.golang.org/vscode-go).
 
 You can always remove the [.devcontainer](.devcontainer) and [.vscode](.vscode) directories if it really does not help you.
-
 
 ### How can I customize the release or add deb/rpm/snap packages, Homebrew Tap, Scoop App Manifest etc
 
