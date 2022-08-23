@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/arthur-laurentdka/petra/server/module"
-	"github.com/arthur-laurentdka/petra/server/provider"
+	"github.com/devoteamgcloud/petra/server/module"
+	"github.com/devoteamgcloud/petra/server/provider"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )
@@ -25,7 +25,7 @@ func Init() error {
 	}
 	address := os.Getenv("LISTEN_ADDRESS")
 	if address == "" {
-		return fmt.Errorf("LISTEN_ADDRESS env var must be set")
+		address = "80"
 	}
 
 	config = Config{

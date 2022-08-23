@@ -19,7 +19,7 @@ spec:
         iam.gke.io/gke-metadata-server-enabled: "true"
       containers:
       - name: petra
-        image: europe-west1-docker.pkg.dev/sandbox-hkim/petra/petra-server:0.1.7
+        image: europe-west1-docker.pkg.dev/dgc-petra-registry-512a/dgc-registry/petra:0.1.7
         env:
           - name: GCS_BUCKET
             valueFrom:

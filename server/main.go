@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	server "github.com/arthur-laurentdka/petra/server/cmd"
+	server "github.com/devoteamgcloud/petra/server/cmd"
 )
 
 func main() {

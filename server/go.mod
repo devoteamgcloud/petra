@@ -1,4 +1,4 @@
-module github.com/arthur-laurentdka/petra/server
+module github.com/devoteamgcloud/petra/server
 
 go 1.17
 
