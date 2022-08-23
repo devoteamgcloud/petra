@@ -11,7 +11,6 @@ import (
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
 	"cloud.google.com/go/storage"
 	"github.com/go-chi/chi/v5"
-	"golang.org/x/oauth2/google"
 	secretmanagerpb "google.golang.org/genproto/googleapis/cloud/secretmanager/v1"
 )
 
@@ -83,27 +82,10 @@ func (b *GCSBackend) getModule(mod Module, ctx context.Context) (string, error) 
 
 	var options *storage.SignedURLOptions
 
-	if secretManagerInfo.projectID != "" && secretManagerInfo.secretID != "" {
-		fmt.Println("Get secret from Secret Manager to create signed url")
-		saKeyFile := getServiceAccountFromSecretManager()
-
-		cfg, err := google.JWTConfigFromJSON(saKeyFile)
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		options = &storage.SignedURLOptions{
-			GoogleAccessID: cfg.Email,
-			PrivateKey:     cfg.PrivateKey,
-			Method:         "GET",
-			Expires:        time.Now().Add(2 * time.Minute),
-		}
-	} else {
-		fmt.Println("Use existing credentials to create signed url")
-		options = &storage.SignedURLOptions{
-			Method:  "GET",
-			Expires: time.Now().Add(2 * time.Minute),
-		}
+	fmt.Println("Use existing credentials to create signed url")
+	options = &storage.SignedURLOptions{
+		Method:  "GET",
+		Expires: time.Now().Add(2 * time.Minute),
 	}
 
 	signedUrl, err := b.client.Bucket(b.bucket).SignedURL(modPath(mod), options)

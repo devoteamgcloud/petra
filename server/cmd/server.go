@@ -12,10 +12,8 @@ import (
 )
 
 type Config struct {
-	bucket    string
-	projectID string
-	secretID  string
-	address   string
+	bucket  string
+	address string
 }
 
 var config Config
@@ -25,21 +23,14 @@ func Init() error {
 	if bucket == "" {
 		return fmt.Errorf("GCS_BUCKET env var must be set")
 	}
-	projectID := os.Getenv("PROJECT_ID")
-	if projectID == "" {
-		return fmt.Errorf("PROJECT_ID env var must be set")
-	}
-	secretID := os.Getenv("SECRET_ID")
-	if secretID == "" {
-		return fmt.Errorf("SECRET_ID env var must be set")
-	}
 	address := os.Getenv("LISTEN_ADDRESS")
+	if address == "" {
+		return fmt.Errorf("LISTEN_ADDRESS env var must be set")
+	}
 
 	config = Config{
-		bucket:    bucket,
-		projectID: projectID,
-		secretID:  secretID,
-		address:   address,
+		bucket:  bucket,
+		address: address,
 	}
 	return nil
 }
@@ -74,8 +65,6 @@ func Run() error {
 		fmt.Fprintln(os.Stderr, err)
 		return err
 	}
-
-	module.InitSecretManagerInfo(config.projectID, config.secretID)
 
 	r.Use(middleware.Heartbeat("/is_alive"))
 
