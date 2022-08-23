@@ -3,30 +3,13 @@ package module
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"time"
 
-	secretmanager "cloud.google.com/go/secretmanager/apiv1"
 	"cloud.google.com/go/storage"
 	"github.com/go-chi/chi/v5"
-	secretmanagerpb "google.golang.org/genproto/googleapis/cloud/secretmanager/v1"
 )
-
-var secretManagerInfo *SecretManagerInfo
-
-type SecretManagerInfo struct {
-	projectID string
-	secretID  string
-}
-
-func InitSecretManagerInfo(projectID string, secretID string) {
-	secretManagerInfo = &SecretManagerInfo{
-		projectID: projectID,
-		secretID:  secretID,
-	}
-}
 
 func getDownloadURL(w http.ResponseWriter, r *http.Request) {
 	mod := Module{
@@ -47,33 +30,6 @@ func getDownloadURL(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-Terraform-Get", downloadURL)
 	fmt.Println("DownloadURL", downloadURL)
 	w.WriteHeader(http.StatusNoContent)
-}
-
-func getServiceAccountFromSecretManager() []byte {
-	// Create the client.
-	ctx := context.Background()
-	client, err := secretmanager.NewClient(ctx)
-	if err != nil {
-		log.Fatalf("failed to setup client: %v", err)
-	}
-	defer client.Close()
-
-	projectID := secretManagerInfo.projectID
-	secretID := secretManagerInfo.secretID
-	version := "latest"
-
-	// Build the request.
-	accessRequest := &secretmanagerpb.AccessSecretVersionRequest{
-		Name: "projects/" + projectID + "/secrets/" + secretID + "/versions/" + version,
-	}
-
-	// Call the API.
-	result, err := client.AccessSecretVersion(ctx, accessRequest)
-	if err != nil {
-		log.Fatalf("failed to access secret version: %v", err)
-	}
-
-	return result.Payload.Data
 }
 
 func (b *GCSBackend) getModule(mod Module, ctx context.Context) (string, error) {
