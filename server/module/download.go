@@ -36,20 +36,31 @@ func (b *GCSBackend) getModule(mod Module, ctx context.Context) (string, error) 
 	fmt.Println("mod :", modPath(mod))
 	fmt.Println("context : ", ctx)
 
-	var options *storage.SignedURLOptions
+	enable_signed_url := os.Getenv("SIGNED_URL")
+	if enable_signed_url == "true" {
 
-	fmt.Println("Use existing credentials to create signed url")
-	options = &storage.SignedURLOptions{
-		Method:  "GET",
-		Expires: time.Now().Add(2 * time.Minute),
+		var options *storage.SignedURLOptions
+
+		fmt.Println("Use existing credentials to create signed url")
+		options = &storage.SignedURLOptions{
+			Method:  "GET",
+			Expires: time.Now().Add(2 * time.Minute),
+		}
+
+		signedUrl, err := b.client.Bucket(b.bucket).SignedURL(modPath(mod), options)
+		if err != nil {
+			return "", fmt.Errorf("Bucket(%q).SignedURL: %v", b.bucket, err)
+		}
+
+		fmt.Println("Generated GET signed URL:")
+		fmt.Printf("%q\n", signedUrl)
+		return fmt.Sprintln(signedUrl), nil
 	}
 
-	signedUrl, err := b.client.Bucket(b.bucket).SignedURL(modPath(mod), options)
+	object := b.client.Bucket(b.bucket).Object(modPath(mod))
+	attrs, err := object.Attrs(ctx)
 	if err != nil {
-		return "", fmt.Errorf("Bucket(%q).SignedURL: %v", b.bucket, err)
+		return "", err
 	}
-
-	fmt.Println("Generated GET signed URL:")
-	fmt.Printf("%q\n", signedUrl)
-	return fmt.Sprintln(signedUrl), nil
+	return fmt.Sprintf("gcs::https://www.googleapis.com/storage/v1/%s/%s", b.bucket, attrs.Name), nil
 }
