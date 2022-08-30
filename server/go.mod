@@ -3,12 +3,9 @@ module github.com/devoteamgcloud/petra/server
 go 1.17
 
 require (
-	cloud.google.com/go/secretmanager v1.5.0
 	cloud.google.com/go/storage v1.25.0
 	github.com/go-chi/chi/v5 v5.0.7
-	golang.org/x/oauth2 v0.0.0-20220808172628-8227340efae7
 	google.golang.org/api v0.93.0
-	google.golang.org/genproto v0.0.0-20220819174105-e9f053255caa
 )
 
 require (
@@ -23,10 +20,12 @@ require (
 	github.com/googleapis/gax-go/v2 v2.5.1 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
+	golang.org/x/oauth2 v0.0.0-20220808172628-8227340efae7 // indirect
 	golang.org/x/sys v0.0.0-20220818161305-2296e01440c6 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/xerrors v0.0.0-20220609144429-65e65417b02f // indirect
 	google.golang.org/appengine v1.6.7 // indirect
+	google.golang.org/genproto v0.0.0-20220819174105-e9f053255caa // indirect
 	google.golang.org/grpc v1.48.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 )
