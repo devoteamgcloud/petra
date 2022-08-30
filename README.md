@@ -37,6 +37,7 @@ Follow these steps if you are OK installing and using Go on your machine.
 
 - `GCS_BUCKET`: bucket with terraform modules
 - `LISTEN_ADDRESS`: server port
+- `SIGNED_URL`: (Optional) Enables the use of a Signed URL for the download api routes. Defaults to false and just forwards a gcs:// link
 
 #### Deploy Server on Cloud Run
 
