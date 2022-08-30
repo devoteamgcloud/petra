@@ -67,7 +67,8 @@ Then `terraform init`:
 ```terraform
 // main.tf
 module "my_module" {
-  source  = "{PETRA_SERVER}:{PORT}/{NAMESPACE}/{MODULE}/{PROVIDER}/{VERSION}/download"
+  source  = "{PETRA_SERVER}:{PORT}/{NAMESPACE}/{MODULE}/{PROVIDER}"
+  version = "{VERSION}"
 }
 ```
 
