@@ -4,8 +4,8 @@ go 1.18
 
 require (
 	cloud.google.com/go/storage v1.24.0
-	github.com/spf13/cobra v1.5.0
-	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+	github.com/spf13/cobra v1.6.1
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -19,7 +19,7 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.1.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.4.0 // indirect
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	go.opencensus.io v0.23.0 // indirect
@@ -33,5 +33,4 @@ require (
 	google.golang.org/genproto v0.0.0-20220617124728-180714bec0ad // indirect
 	google.golang.org/grpc v1.47.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
