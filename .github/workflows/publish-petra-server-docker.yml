@@ -35,7 +35,7 @@ jobs:
 
       - name: Google Auth
         id: google-auth
-        uses: 'google-github-actions/auth@v0'
+        uses: 'google-github-actions/auth@v1'
         with:
           export_default_credentials: false
           token_format: 'access_token'
