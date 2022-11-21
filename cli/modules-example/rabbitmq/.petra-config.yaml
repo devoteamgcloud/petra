@@ -1,7 +1,0 @@
-namespace: staging
-name: rabbitmq
-provider: helm
-version: 0.0.2
-metadata:
-    owner: Hyokil
-    team: GCP
