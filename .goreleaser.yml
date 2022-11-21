@@ -1,0 +1,29 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  - id: petra
+    binary: petra
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+dockers:
+  -
+    image_templates:
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:latest"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+    build_flag_templates:
+    - "--pull"
+    - "--label=org.opencontainers.image.created={{.Date}}"
+    - "--label=org.opencontainers.image.name={{.ProjectName}}"
+    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    - "--label=org.opencontainers.image.version={{.Version}}"
+    - "--label=org.opencontainers.image.source={{.GitURL}}"
