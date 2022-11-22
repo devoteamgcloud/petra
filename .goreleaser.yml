@@ -13,12 +13,14 @@ builds:
       - amd64
       - arm64
 
+release:
+  prerelease: auto
+
 dockers:
   -
     image_templates:
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:latest"
-    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}"
-    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Summary }}"
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
     build_flag_templates:
     - "--pull"
