@@ -37,8 +37,10 @@ var pushCmd = &cobra.Command{
 			return err
 		}
 
-		modules.PackageModules(args[0], flagRecursive, backend)
-
+		err = modules.PackageModules(args[0], flagRecursive, backend)
+		if err != nil {
+			return err
+		}
 		return nil
 	},
 }
