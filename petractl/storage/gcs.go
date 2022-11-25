@@ -14,13 +14,6 @@ type GCSBackend struct {
 	bucket string
 }
 
-type module struct {
-	namespace string `yaml:"namespace"`
-	name      string `yaml:"name"`
-	provider  string `yaml:"provider"`
-	version   string `yaml:"version"`
-}
-
 func InitGCSBackend(bucket string) (*GCSBackend, error) {
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
