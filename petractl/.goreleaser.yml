@@ -1,0 +1,17 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  - id: petractl
+    binary: petractl
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+release:
+  prerelease: auto
