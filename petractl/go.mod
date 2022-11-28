@@ -3,7 +3,9 @@ module github.com/devoteamgcloud/petra/petractl
 go 1.19
 
 require (
+	github.com/go-chi/chi/v5 v5.0.7
 	github.com/spf13/cobra v1.6.1
+	google.golang.org/api v0.102.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -24,7 +26,6 @@ require (
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
 	golang.org/x/text v0.4.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
-	google.golang.org/api v0.102.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20221024183307-1bc688fe9f3e // indirect
 	google.golang.org/grpc v1.50.1 // indirect
