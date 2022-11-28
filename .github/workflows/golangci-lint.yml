@@ -36,4 +36,3 @@ jobs:
         with:
           version: v1.50
           working-directory: petractl
-          only-new-issues: true

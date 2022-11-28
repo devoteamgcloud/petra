@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/devoteamgcloud/petra/internal/modules"
+	"github.com/devoteamgcloud/petra/modules"
 	"github.com/go-chi/chi/v5"
 )
 
