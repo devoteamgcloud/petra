@@ -18,14 +18,7 @@ const (
 	petraConfigFile = "petra-config.yaml"
 )
 
-type module struct {
-	Namespace string `yaml:"namespace"`
-	Name      string `yaml:"name"`
-	Provider  string `yaml:"provider"`
-	Version   string `yaml:"version"`
-}
-
-func PackageModules(workingDir string, recursive bool, backend *storage.GCSBackend) error {
+func PackageModules(workingDir string, recursive bool, b *storage.GCSBackend) error {
 	var err error
 	fmt.Printf("workingdir: %v and recursive %v\n", workingDir, recursive)
 	if recursive {
@@ -34,7 +27,7 @@ func PackageModules(workingDir string, recursive bool, backend *storage.GCSBacke
 				fmt.Println(fi.Name())
 				return nil
 			}
-			return processModule(path, backend)
+			return processModule(path, b)
 		})
 		if err != nil {
 			return fmt.Errorf("error: %v", err)
@@ -46,7 +39,7 @@ func PackageModules(workingDir string, recursive bool, backend *storage.GCSBacke
 	return err
 }
 
-func processModule(path string, backend *storage.GCSBackend) error {
+func processModule(path string, b *storage.GCSBackend) error {
 	var err error
 	// Retrieve Module Specs
 	mod := &module{}
@@ -72,7 +65,8 @@ func processModule(path string, backend *storage.GCSBackend) error {
 	}
 
 	// Upload archive to bucket
-	downloadURL, err := backend.UploadModule(mod.Namespace, mod.Name, mod.Provider, mod.Version, archiveBuffer)
+	modulePath := modPath(*mod)
+	downloadURL, err := b.UploadModule(modulePath, archiveBuffer)
 	if err != nil {
 		return err
 	}

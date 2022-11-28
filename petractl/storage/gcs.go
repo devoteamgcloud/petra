@@ -3,15 +3,13 @@ package storage
 import (
 	"context"
 	"fmt"
-	"io"
-	"path"
 
 	"cloud.google.com/go/storage"
 )
 
 type GCSBackend struct {
-	client *storage.Client
-	bucket string
+	Client *storage.Client
+	Bucket string
 }
 
 func InitGCSBackend(bucket string) (*GCSBackend, error) {
@@ -25,36 +23,9 @@ func InitGCSBackend(bucket string) (*GCSBackend, error) {
 		return nil, fmt.Errorf("Bucket(%q): %v", bucket, err)
 	}
 	backend := &GCSBackend{
-		client: client,
-		bucket: bucket,
+		Client: client,
+		Bucket: bucket,
 	}
 
 	return backend, nil
-}
-
-func (b *GCSBackend) UploadModule(namespace string, name string, provider string, version string, buff io.Reader) (string, error) {
-	ctx := context.Background()
-	var objPath = modPath(namespace, name, provider, version)
-	wr := b.client.Bucket(b.bucket).Object(objPath).NewWriter(ctx)
-
-	if _, err := io.Copy(wr, buff); err != nil {
-		return "", fmt.Errorf("upload failed - %v", err.Error())
-	}
-	if err := wr.Close(); err != nil {
-		return "", fmt.Errorf("upload failed - %v", err.Error())
-	}
-
-	return fmt.Sprintf("gcs::https://www.googleapis.com/storage/v1/%s/%s", b.bucket, objPath), nil
-}
-
-/* Utils */
-
-func modPath(namespace string, name string, provider string, version string) string {
-	return path.Join(
-		namespace,
-		name,
-		provider,
-		version,
-		fmt.Sprintf("%s-%s-%s-%s.tar.gz", namespace, name, provider, version),
-	)
 }

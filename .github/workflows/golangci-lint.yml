@@ -11,7 +11,7 @@ permissions:
   pull-requests: read
 jobs:
   golangci-petra:
-    name: lint
+    name: lint-petra
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-go@v3
@@ -24,7 +24,7 @@ jobs:
           version: v1.50
           only-new-issues: true
   golangci-petractl:
-    name: lint
+    name: lint-petractl
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-go@v3
@@ -36,4 +36,3 @@ jobs:
         with:
           version: v1.50
           working-directory: petractl
-          only-new-issues: true

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/devoteamgcloud/petra/internal/modules"
-	"github.com/devoteamgcloud/petra/internal/storage"
+	"github.com/devoteamgcloud/petra/petractl/modules"
+	"github.com/devoteamgcloud/petra/petractl/storage"
 	"github.com/spf13/cobra"
 )
 
