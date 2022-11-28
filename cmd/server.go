@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	routes "github.com/devoteamgcloud/petra/routes"
+	"github.com/devoteamgcloud/petra/routes"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

@@ -1,9 +1,7 @@
 package routes
 
 import (
-	"fmt"
-	"path"
-
+	"github.com/devoteamgcloud/petra/internal/modules"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -16,31 +14,11 @@ type Module struct {
 	Version   string `json:"version"`
 }
 
-/* Utils */
-
-func modPath(mod Module) string {
-	return path.Join(
-		mod.Namespace,
-		mod.Name,
-		mod.Provider,
-		mod.Version,
-		fmt.Sprintf("%s-%s-%s-%s.zip", mod.Namespace, mod.Name, mod.Provider, mod.Version),
-	)
-}
-
-func modPathPartial(mod Module) string {
-	return path.Join(
-		mod.Namespace,
-		mod.Name,
-		mod.Provider,
-	)
-}
-
 /* <Router> */
 
 func ModulesRouter(r chi.Router) {
-	r.Get("/{namespace}/{name}/{provider}/versions", getVersions)
-	r.Get("/{namespace}/{name}/{provider}/{version}/download", getDownloadURL)
+	r.Get("/{namespace}/{name}/{provider}/versions", modules.GetVersions)
+	r.Get("/{namespace}/{name}/{provider}/{version}/download", modules.GetDownloadURL)
 }
 
 /* </Router> */

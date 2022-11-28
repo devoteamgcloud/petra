@@ -1,4 +1,4 @@
-package routes
+package modules
 
 import (
 	"context"
@@ -8,20 +8,17 @@ import (
 	"time"
 
 	"cloud.google.com/go/storage"
-	petra_storage "github.com/devoteamgcloud/petra/storage"
 	"github.com/go-chi/chi/v5"
 )
 
-func getDownloadURL(w http.ResponseWriter, r *http.Request) {
-	mod := Module{
+func GetDownloadURL(w http.ResponseWriter, r *http.Request) {
+	mod := module{
 		Namespace: chi.URLParam(r, "namespace"),
 		Name:      chi.URLParam(r, "name"),
 		Provider:  chi.URLParam(r, "provider"),
 		Version:   chi.URLParam(r, "version"),
 	}
-	fmt.Println("Enters the getDownloadURL function")
 	ctx := context.Background()
-	fmt.Println("gcs bucket : ", petra_storage.GCSBucket)
 	downloadURL, err := getModule(mod, ctx)
 	if err != nil {
 		// TODO add error handler
@@ -33,7 +30,7 @@ func getDownloadURL(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
-func getModule(mod Module, ctx context.Context) (string, error) {
+func getModule(mod module, ctx context.Context) (string, error) {
 	fmt.Println("mod :", modPath(mod))
 	fmt.Println("context : ", ctx)
 
@@ -48,9 +45,9 @@ func getModule(mod Module, ctx context.Context) (string, error) {
 			Expires: time.Now().Add(2 * time.Minute),
 		}
 
-		signedUrl, err := petra_storage.GCSBucket.Client.Bucket(petra_storage.GCSBucket.Bucket).SignedURL(modPath(mod), options)
+		signedUrl, err := backend.Client.Bucket(backend.Bucket).SignedURL(modPath(mod), options)
 		if err != nil {
-			return "", fmt.Errorf("Bucket(%q).SignedURL: %v", petra_storage.GCSBucket.Bucket, err)
+			return "", fmt.Errorf("Bucket(%q).SignedURL: %v", backend.Bucket, err)
 		}
 
 		fmt.Println("Generated GET signed URL:")
@@ -58,10 +55,10 @@ func getModule(mod Module, ctx context.Context) (string, error) {
 		return fmt.Sprintln(signedUrl), nil
 	}
 
-	object := petra_storage.GCSBucket.Client.Bucket(petra_storage.GCSBucket.Bucket).Object(modPath(mod))
+	object := backend.Client.Bucket(backend.Bucket).Object(modPath(mod))
 	attrs, err := object.Attrs(ctx)
 	if err != nil {
 		return "", err
 	}
-	return fmt.Sprintf("gcs::https://www.googleapis.com/storage/v1/%s/%s", petra_storage.GCSBucket.Bucket, attrs.Name), nil
+	return fmt.Sprintf("gcs::https://www.googleapis.com/storage/v1/%s/%s", backend.Bucket, attrs.Name), nil
 }
