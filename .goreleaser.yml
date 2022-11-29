@@ -21,7 +21,6 @@ dockers:
     image_templates:
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:latest"
     - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Summary }}"
-    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
