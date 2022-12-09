@@ -20,11 +20,9 @@ const (
 
 func PackageModules(workingDir string, recursive bool, b *storage.GCSBackend) error {
 	var err error
-	fmt.Printf("workingdir: %v and recursive %v\n", workingDir, recursive)
 	if recursive {
 		err = filepath.Walk(workingDir, func(path string, fi os.FileInfo, err error) error {
 			if fi.Name() != petraConfigFile {
-				fmt.Println(fi.Name())
 				return nil
 			}
 			return processModule(path, b)
@@ -33,8 +31,7 @@ func PackageModules(workingDir string, recursive bool, b *storage.GCSBackend) er
 			return fmt.Errorf("error: %v", err)
 		}
 	} else {
-		fmt.Printf("filepath: %v\n", filepath.Join(workingDir, petraConfigFile))
-		err = processModule(filepath.Join(workingDir, petraConfigFile), backend)
+		err = processModule(filepath.Join(workingDir, petraConfigFile), b)
 	}
 	return err
 }
@@ -57,7 +54,6 @@ func processModule(path string, b *storage.GCSBackend) error {
 
 	moduleRoot := filepath.Dir(path)
 
-	fmt.Println("Before Archive")
 	// Create tgz archive
 	archiveBuffer, err := archiveModule(moduleRoot)
 	if err != nil {
@@ -71,7 +67,7 @@ func processModule(path string, b *storage.GCSBackend) error {
 		return err
 	}
 
-	fmt.Printf("module successfully uploaded at : %s", downloadURL)
+	fmt.Printf("module successfully uploaded at : %s\n", downloadURL)
 
 	return err
 }
@@ -82,8 +78,6 @@ func archiveModule(root string) (io.Reader, error) {
 	if _, err := os.Stat(root); err != nil {
 		return buf, fmt.Errorf("unable to tar files - %v", err.Error())
 	}
-
-	fmt.Println(root)
 
 	gw := gzip.NewWriter(buf)
 	defer gw.Close()
@@ -101,7 +95,6 @@ func archiveModule(root string) (io.Reader, error) {
 			return nil
 		}
 
-		fmt.Println(fi.Name())
 		// create a new dir/file header
 		header, err := tar.FileInfoHeader(fi, fi.Name())
 		if err != nil {
@@ -111,18 +104,15 @@ func archiveModule(root string) (io.Reader, error) {
 		// update the name to correctly reflect the desired destination when untaring
 		header.Name = strings.TrimPrefix(strings.Replace(path, root, "", -1), string(filepath.Separator))
 
-		fmt.Println("before write header")
 		if err := tw.WriteHeader(header); err != nil {
 			return err
 		}
 
-		fmt.Println("Before os open")
 		data, err := os.Open(path)
 		if err != nil {
 			return err
 		}
 
-		fmt.Println("Before io copy")
 		if _, err := io.Copy(tw, data); err != nil {
 			return err
 		}
@@ -133,8 +123,6 @@ func archiveModule(root string) (io.Reader, error) {
 
 		return nil
 	})
-
-	fmt.Println(err)
 
 	return buf, err
 }
