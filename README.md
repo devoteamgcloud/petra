@@ -15,7 +15,10 @@ Follow these steps if you are OK installing and using Go on your machine.
 ### petractl (cli)
 
 - [petractl](petractl) - CLI to upload / remove / upload a terraform module to a private registry (Google Cloud Storage bucket).
-
+    - example usage : 
+    ```bash
+    petractl push  --bucket tf-registry-petra  ../tests/mod1
+    ```
 ### petra (server)
 
 - [petra]() - Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket) configured by the following env vars :
