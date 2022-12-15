@@ -31,6 +31,23 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
       
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: 'projects/975145932914/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-provider'
+          service_account: ${{ secrets.GSA }}
+          token_format: 'access_token'
+          access_token_lifetime: '300s'
+
+      - name: Login to Artifact Registry Registry
+        uses: docker/login-action@v2
+        with:
+          registry: europe-docker.pkg.dev
+          username: oauth2accesstoken
+          password: '${{ steps.auth.outputs.access_token }}'
+
+      
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
