@@ -3,7 +3,7 @@ module github.com/devoteamgcloud/petra/petractl
 go 1.19
 
 require (
-	github.com/go-chi/chi/v5 v5.0.7
+	github.com/go-chi/chi/v5 v5.0.8
 	github.com/spf13/cobra v1.6.1
 	google.golang.org/api v0.104.0
 	gopkg.in/yaml.v3 v3.0.1
