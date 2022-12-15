@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	cloud.google.com/go/storage v1.28.0
-	github.com/go-chi/chi/v5 v5.0.7
 	google.golang.org/api v0.104.0
+	github.com/go-chi/chi/v5 v5.0.8
 )
 
 require (
