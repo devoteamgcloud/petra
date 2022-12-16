@@ -20,7 +20,7 @@ dockers:
   -
     image_templates:
     - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:latest"
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .Summary }}"
+    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:{{ .Summary }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
