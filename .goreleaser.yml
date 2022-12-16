@@ -19,8 +19,6 @@ release:
 dockers:
   -
     image_templates:
-    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:latest"
-    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Summary }}"
     - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:latest"
     - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .Summary }}"
     build_flag_templates:
