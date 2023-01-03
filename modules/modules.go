@@ -17,13 +17,12 @@ type module struct {
 
 var backend *storage.GCSBackend
 
-func Init() error {
+func init() {
 	var err error
 	backend, err = storage.InitGCSBackend(os.Getenv("GCS_BUCKET"))
 	if err != nil {
-		return fmt.Errorf("failed to setup storage: %v", err)
+		fmt.Fprintf(os.Stderr, "failed to setup storage: %v", err)
 	}
-	return nil
 }
 
 func modPath(mod module) string {

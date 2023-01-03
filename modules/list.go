@@ -26,7 +26,6 @@ func GetVersions(w http.ResponseWriter, r *http.Request) {
 		Provider:  chi.URLParam(r, "provider"),
 	}
 	ctx := context.Background()
-	fmt.Println("Enters the getVersions function")
 	path := modPathPartial(mod)
 	retrievedVersions, err := backend.ModuleVersions(path, ctx)
 	if err != nil {
@@ -37,7 +36,6 @@ func GetVersions(w http.ResponseWriter, r *http.Request) {
 	for _, v := range retrievedVersions {
 		versions = append(versions, Version{v})
 	}
-
 	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(struct {
 		Modules listModuleVersions `json:"modules"`
