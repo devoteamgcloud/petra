@@ -37,7 +37,17 @@ Then `terraform init`:
 ```terraform
 // main.tf
 module "my_module" {
-  source  = "{CLOUD_RUN_URL}:{PORT}/{NAMESPACE}/{MODULE}/{PROVIDER}/{VERSION}/download"
+  source  = "{CLOUD_RUN_URL}/{NAMESPACE}/{MODULE}/{PROVIDER}/{VERSION}"
+}
+```
+
+or specify the module version separately :
+
+```terraform
+// main.tf
+module "my_module" {
+  source  = "{CLOUD_RUN_URL}/{NAMESPACE}/{MODULE}/{PROVIDER}"
+  version = "{VERSION}"
 }
 ```
 
@@ -53,7 +63,7 @@ Then `terraform init`:
 ```terraform
 // main.tf
 module "my_module" {
-  source  = "{PETRA_SERVER}:{PORT}/{NAMESPACE}/{MODULE}/{PROVIDER}"
+  source  = "{PETRA_SERVER}/{NAMESPACE}/{MODULE}/{PROVIDER}"
   version = "{VERSION}"
 }
 ```
