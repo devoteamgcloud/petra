@@ -19,7 +19,7 @@ jobs:
           cache: true
 
       - name: petractl-build
-        run: go build && export PATH=$PATH:$PWD/petractl
+        run: go build && export PATH=$PATH:$PWD
         working-directory: petractl
 
       - uses: charmbracelet/vhs-action@v1
