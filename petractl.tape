@@ -1,6 +1,6 @@
 Output petractl.gif
 
-Type "./petractl/petractl"
+Type "petractl"
 Sleep 100ms
 Enter
 
