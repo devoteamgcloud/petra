@@ -19,6 +19,10 @@ Follow these steps if you are OK installing and using Go on your machine.
     ```bash
     petractl push  --bucket tf-registry-petra  ../tests/mod1
     ```
+**Example Usage :**
+
+
+
 ### petra (server)
 
 - [petra]() - Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket) configured by the following env vars :
