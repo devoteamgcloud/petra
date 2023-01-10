@@ -1,0 +1,32 @@
+name: qa
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+
+jobs:
+  petra-qa:
+    name: petra-qa
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - uses: actions/checkout@v3
+      - name: go-build
+        run: go build
+
+  petractl-qa: 
+    name: petractl-qa
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - uses: actions/checkout@v3
+      - name: go-build
+        run: go build
+        working-directory: petractl
