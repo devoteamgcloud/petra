@@ -28,10 +28,6 @@ jobs:
         with:
           go-version: 1.19
           cache: true
-      
-      - name: go-build
-        run: go build
-        working-directory: petractl
 
       - name: Import GPG key
         id: import_gpg
@@ -77,10 +73,6 @@ jobs:
         with:
           go-version: 1.19
           cache: true
-      
-      - name: go-build
-        run: go build
-        working-directory: petractl
 
       - name: Import GPG key
         id: import_gpg
