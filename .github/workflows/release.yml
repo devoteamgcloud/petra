@@ -28,6 +28,10 @@ jobs:
         with:
           go-version: 1.19
           cache: true
+      
+      - name: go-build
+        run: go build
+        working-directory: petractl
 
       - name: Import GPG key
         id: import_gpg
@@ -53,7 +57,7 @@ jobs:
           password: '${{ steps.auth.outputs.access_token }}'
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v3
+        uses: goreleaser/goreleaser-action@v3 
         with:
           version: v1.13
           args: release --rm-dist
@@ -73,6 +77,10 @@ jobs:
         with:
           go-version: 1.19
           cache: true
+      
+      - name: go-build
+        run: go build
+        working-directory: petractl
 
       - name: Import GPG key
         id: import_gpg
@@ -80,13 +88,6 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
-      
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v3

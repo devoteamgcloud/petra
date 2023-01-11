@@ -1,5 +1,18 @@
 # Petra
 
+<p>
+  <br>
+  <a href="https://github.com/devoteamgcloud/petra/releases"><img src="https://img.shields.io/github/release/devoteamgcloud/petra.svg" alt="Latest Release"></a>
+  <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/qa/badge.svg" alt="Build Status"></a>
+  <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/doc/badge.svg" alt="Documentation"></a>
+  <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/golangci-lint/badge.svg" alt="Linter"></a>
+  <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/release/badge.svg" alt="Release"></a>
+</p>
+
+Host a Private Terraform Registry and push terraform modules to it.
+
+<img alt="Welcome to VHS" src="./petractl.gif" width="600" />
+
 ### Local Machine
 
 Follow these steps if you are OK installing and using Go on your machine.
@@ -19,6 +32,10 @@ Follow these steps if you are OK installing and using Go on your machine.
     ```bash
     petractl push  --bucket tf-registry-petra  ../tests/mod1
     ```
+**Example Usage :**
+
+
+
 ### petra (server)
 
 - [petra]() - Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket) configured by the following env vars :
@@ -37,7 +54,17 @@ Then `terraform init`:
 ```terraform
 // main.tf
 module "my_module" {
-  source  = "{CLOUD_RUN_URL}:{PORT}/{NAMESPACE}/{MODULE}/{PROVIDER}/{VERSION}/download"
+  source  = "{CLOUD_RUN_URL}/{NAMESPACE}/{MODULE}/{PROVIDER}/{VERSION}"
+}
+```
+
+or specify the module version separately :
+
+```terraform
+// main.tf
+module "my_module" {
+  source  = "{CLOUD_RUN_URL}/{NAMESPACE}/{MODULE}/{PROVIDER}"
+  version = "{VERSION}"
 }
 ```
 
@@ -53,7 +80,7 @@ Then `terraform init`:
 ```terraform
 // main.tf
 module "my_module" {
-  source  = "{PETRA_SERVER}:{PORT}/{NAMESPACE}/{MODULE}/{PROVIDER}"
+  source  = "{PETRA_SERVER}/{NAMESPACE}/{MODULE}/{PROVIDER}"
   version = "{VERSION}"
 }
 ```
