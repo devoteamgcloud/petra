@@ -6,7 +6,7 @@
   <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/qa/badge.svg" alt="Build Status"></a>
   <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/doc/badge.svg" alt="Documentation"></a>
   <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/golangci-lint/badge.svg" alt="Linter"></a>
-  <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/release/badge.svg" alt="Release"></a>
+  <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/goreleaser/badge.svg" alt="Release"></a>
 </p>
 
 Host a Private Terraform Registry and push terraform modules to it.
