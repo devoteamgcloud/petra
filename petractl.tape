@@ -4,7 +4,7 @@ Set FontSize 21
 Set Padding 2
 Set Width 1200
 Set Height 600
-Set PlaybackSpeed 0.5
+Set PlaybackSpeed 0.8
 
 Type "petractl"
 Sleep 100ms

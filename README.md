@@ -1,5 +1,15 @@
 # Petra
 
+<p>
+  <br>
+  <a href="https://github.com/devoteamgcloud/petra/releases"><img src="https://img.shields.io/github/release/devoteamgcloud/petra.svg" alt="Latest Release"></a>
+  <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/qa/badge.svg" alt="Build Status"></a>
+</p>
+
+Host a Private Terraform Registry and push terraform modules to it.
+
+<img alt="Welcome to VHS" src="./petractl.gif" width="600" />
+
 ### Local Machine
 
 Follow these steps if you are OK installing and using Go on your machine.
