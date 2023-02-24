@@ -1,0 +1,4 @@
+namespace: petra-test
+name: mod1
+provider: google
+version: 1.0.0
