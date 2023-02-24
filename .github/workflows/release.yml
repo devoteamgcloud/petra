@@ -26,7 +26,7 @@ jobs:
 
       - uses: actions/setup-go@v3
         with:
-          go-version: 1.19
+          go-version: 1.20.1
           cache: true
 
       - name: Import GPG key
@@ -55,7 +55,7 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
         with:
-          version: v1.13
+          version: v1.15.2
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -71,7 +71,7 @@ jobs:
 
       - uses: actions/setup-go@v3
         with:
-          go-version: 1.19
+          go-version: 1.20.1
           cache: true
 
       - name: Import GPG key
@@ -84,7 +84,7 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v4
         with:
-          version: v1.13
+          version: v1.15.2
           workdir: petractl
           args: release --rm-dist
         env:
