@@ -40,6 +40,12 @@ signs:
 docker_signs:
 - artifacts: images
   stdin: '{{ .Env.COSIGN_PASSWORD }}'
+  args:
+  - "sign"
+  - "--key=cosign.key"
+  - "--upload=false"
+  - "${artifact}"
+  - "--yes" # needed on cosign 2.0.0+
 
 release:
   prerelease: auto
