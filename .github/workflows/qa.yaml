@@ -13,20 +13,8 @@ jobs:
     steps:
       - uses: actions/setup-go@v4
         with:
-          go-version: 1.20.1
+          go-version: 1.20.3
       - uses: actions/checkout@v3
       - name: go-build
         run: go build
-
-  petractl-qa: 
-    name: petractl-qa
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/setup-go@v4
-        with:
-          go-version: 1.20.1
-      - uses: actions/checkout@v3
-      - name: go-build
-        run: go build
-        working-directory: petractl
+        working-directory: cmd/server
