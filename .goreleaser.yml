@@ -4,6 +4,19 @@ before:
 builds:
   - id: petra
     binary: petra
+    main: ./cmd/server
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+  - id: petractl
+    binary: petractl
+    main: ./cmd/cli
     env:
       - CGO_ENABLED=0
     goos:
@@ -21,6 +34,8 @@ dockers:
     image_templates:
     - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:latest"
     - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:{{ .Summary }}"
+    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:v{{ .Major }}"
+    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
