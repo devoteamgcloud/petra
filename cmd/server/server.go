@@ -1,11 +1,11 @@
-package server
+package main
 
 import (
 	"fmt"
 	"net/http"
 	"os"
 
-	"github.com/devoteamgcloud/petra/routes"
+	"github.com/devoteamgcloud/petra/internal/routes"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

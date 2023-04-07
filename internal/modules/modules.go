@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/devoteamgcloud/petra/storage"
+	"github.com/devoteamgcloud/petra/internal/storage"
 )
 
 type module struct {
