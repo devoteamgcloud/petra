@@ -46,7 +46,7 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           workload_identity_provider: 'projects/975145932914/locations/global/workloadIdentityPools/github-identity-pool/providers/github-identity-provider'
-          service_account: 'github-automation-sa@orga-automation-58dl.iam.gserviceaccount.com'
+          service_account: 'sa-petra-github-automation@dgc-sbx-auto-d67d57e4.iam.gserviceaccount.com'
           token_format: 'access_token'
           access_token_lifetime: '300s'
 
