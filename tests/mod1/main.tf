@@ -6,3 +6,7 @@ resource "google_storage_bucket" "auto_expire" {
 
   public_access_prevention = "enforced"
 }
+
+module "nr" {
+  source = "./modules"
+}

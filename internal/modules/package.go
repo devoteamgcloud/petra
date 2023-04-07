@@ -54,6 +54,11 @@ func processModule(path string, b *storage.GCSBackend) error {
 
 	moduleRoot := filepath.Dir(path)
 
+	// Fixes the bug where when the filepath is '.' all the file extensions get dropped
+	if moduleRoot == "." {
+		moduleRoot = moduleRoot + "/"
+	}
+
 	// Create tgz archive
 	archiveBuffer, err := archiveModule(moduleRoot)
 	if err != nil {
