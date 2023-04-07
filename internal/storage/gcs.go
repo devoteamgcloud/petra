@@ -14,14 +14,18 @@ type GCSBackend struct {
 
 func InitGCSBackend(bucket string) (*GCSBackend, error) {
 	ctx := context.Background()
+	fmt.Println("\n" + bucket)
+
 	client, err := storage.NewClient(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("storage.NewClient: %v", err)
+	}
+	defer client.Close()
+
 	if err != nil {
 		return nil, err
 	}
-	_, err = client.Bucket(bucket).Attrs(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("Bucket(%q): %v", bucket, err)
-	}
+
 	backend := &GCSBackend{
 		Client: client,
 		Bucket: bucket,

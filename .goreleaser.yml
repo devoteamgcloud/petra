@@ -4,6 +4,7 @@ before:
 builds:
   - id: petra
     binary: petra
+    main: ./cmd/server
     env:
       - CGO_ENABLED=0
     goos:
@@ -13,18 +14,69 @@ builds:
       - amd64
       - arm64
 
+  - id: petractl
+    binary: petractl
+    main: ./cmd/cli
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+signs:
+- cmd: cosign
+  stdin: '{{ .Env.COSIGN_PASSWORD }}'
+  args:
+  - "sign-blob"
+  - "--key=cosign.key"
+  - "--output-signature=${signature}"
+  - "${artifact}"
+  - "--yes" # needed on cosign 2.0.0+
+  artifacts: all
+
+docker_signs:
+- artifacts: images
+  stdin: '{{ .Env.COSIGN_PASSWORD }}'
+  args:
+  - "sign"
+  - "--key=cosign.key"
+  - "--upload=false"
+  - "${artifact}"
+  - "--yes" # needed on cosign 2.0.0+
+
 release:
   prerelease: auto
 
 dockers:
   -
     image_templates:
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:latest"
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:{{ .Summary }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:latest"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:{{ .Summary }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:v{{ .Major }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
     - "--label=org.opencontainers.image.name={{.ProjectName}}"
+    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    - "--label=org.opencontainers.image.version={{.Version}}"
+    - "--label=org.opencontainers.image.source={{.GitURL}}"
+
+  -
+
+    dockerfile: 'Dockerfile.petractl'
+    image_templates:
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:latest"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:{{ .Summary }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:v{{ .Major }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:v{{ .Major }}.{{ .Minor }}"
+    build_flag_templates:
+    - "--pull"
+    - "--label=org.opencontainers.image.created={{.Date}}"
+    - "--label=org.opencontainers.image.name=petractl"
     - "--label=org.opencontainers.image.revision={{.FullCommit}}"
     - "--label=org.opencontainers.image.version={{.Version}}"
     - "--label=org.opencontainers.image.source={{.GitURL}}"

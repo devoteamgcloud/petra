@@ -1,0 +1,5 @@
+FROM gcr.io/distroless/static-debian11:nonroot
+WORKDIR /
+COPY petractl /
+USER nonroot:nonroot
+ENTRYPOINT [ "/petractl" ]

@@ -22,7 +22,7 @@ func (b *GCSBackend) ModuleVersions(path string, ctx context.Context) ([]string,
 		if err != nil {
 			return versions, err
 		}
-		if attrs.ContentType != "application/zip" {
+		if attrs.ContentType != "application/x-gzip" {
 			continue
 		}
 		version := strings.Split(attrs.Name, "/")[3]

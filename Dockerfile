@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/base:nonroot
+FROM gcr.io/distroless/static-debian11:nonroot
 WORKDIR /
 COPY petra /
 USER nonroot:nonroot
