@@ -1,6 +1,5 @@
 FROM gcr.io/distroless/static-debian11:nonroot
 WORKDIR /
-COPY petra /
+COPY petractl /
 USER nonroot:nonroot
-EXPOSE 8080
-ENTRYPOINT [ "/petra" ]
+ENTRYPOINT [ "/petractl" ]

@@ -26,6 +26,21 @@ builds:
       - amd64
       - arm64
 
+signs:
+- cmd: cosign
+  stdin: '{{ .Env.COSIGN_PASSWORD }}'
+  args:
+  - "sign-blob"
+  - "--key=cosign.key"
+  - "--output-signature=${signature}"
+  - "${artifact}"
+  - "--yes" # needed on cosign 2.0.0+
+  artifacts: all
+
+docker_signs:
+- artifacts: images
+  stdin: '{{ .Env.COSIGN_PASSWORD }}'
+
 release:
   prerelease: auto
 
@@ -40,6 +55,22 @@ dockers:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
     - "--label=org.opencontainers.image.name={{.ProjectName}}"
+    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    - "--label=org.opencontainers.image.version={{.Version}}"
+    - "--label=org.opencontainers.image.source={{.GitURL}}"
+
+  -
+
+    dockerfile: 'Dockerfile.petractl'
+    image_templates:
+    - "europe-docker.pkg.dev/orga-automation-58dl/utils/petractl:latest"
+    - "europe-docker.pkg.dev/orga-automation-58dl/utils/petractl:{{ .Summary }}"
+    - "europe-docker.pkg.dev/orga-automation-58dl/utils/petractl:v{{ .Major }}"
+    - "europe-docker.pkg.dev/orga-automation-58dl/utils/petractl:v{{ .Major }}.{{ .Minor }}"
+    build_flag_templates:
+    - "--pull"
+    - "--label=org.opencontainers.image.created={{.Date}}"
+    - "--label=org.opencontainers.image.name=petractl"
     - "--label=org.opencontainers.image.revision={{.FullCommit}}"
     - "--label=org.opencontainers.image.version={{.Version}}"
     - "--label=org.opencontainers.image.source={{.GitURL}}"
