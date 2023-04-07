@@ -53,10 +53,10 @@ release:
 dockers:
   -
     image_templates:
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:latest"
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:{{ .Summary }}"
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:v{{ .Major }}"
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:latest"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:{{ .Summary }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:v{{ .Major }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
@@ -69,10 +69,10 @@ dockers:
 
     dockerfile: 'Dockerfile.petractl'
     image_templates:
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/petractl:latest"
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/petractl:{{ .Summary }}"
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/petractl:v{{ .Major }}"
-    - "europe-docker.pkg.dev/orga-automation-58dl/utils/petractl:v{{ .Major }}.{{ .Minor }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:latest"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:{{ .Summary }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:v{{ .Major }}"
+    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:v{{ .Major }}.{{ .Minor }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
