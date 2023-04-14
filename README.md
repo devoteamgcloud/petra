@@ -1,4 +1,4 @@
-# Petra
+# Petra (Private Terraform Registry)
 
 <p>
   <br>
@@ -9,39 +9,32 @@
   <a href="https://github.com/devoteamgcloud/petra/actions"><img src="https://github.com/devoteamgcloud/petra/workflows/goreleaser/badge.svg" alt="Release"></a>
 </p>
 
-Host a Private Terraform Registry and push terraform modules to it.
+Petra is a lightweight tool that allows to host your own private Terraform registry using Google Cloud Storage as a storage backend.
+
+Petra is not an official Devoteam product and is provided as-is to the community.
 
 <img alt="Welcome to VHS" src="./petractl.gif" width="600" />
 
-### Local Machine
 
-Follow these steps if you are OK installing and using Go on your machine.
+## Components
 
-1. Install [Go](https://golang.org/doc/install).
-1. Install [Visual Studio Code](https://code.visualstudio.com/).
-1. Install [Go extension](https://code.visualstudio.com/docs/languages/go).
-1. Clone and open this repository.
-1. `F1` -> `Go: Install/Update Tools` -> (select all) -> OK.
-
-## Documentation
+### petra (server)
+Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket). 
+Configured by the following env vars :  
+  - `GCS_BUCKET`: Bucket used to host Terraform modules  
+  - `SIGNED_URL`: (Optional) Enables the use of a Signed URL for the download api routes. Defaults to false and just forwards a gcs:// link
 
 ### petractl (cli)
 
-- [petractl](petractl) - CLI to upload / remove / upload a terraform module to a private registry (Google Cloud Storage bucket).
-    - example usage : 
+CLI to upload / remove / upload a terraform module to a private registry (Google Cloud Storage bucket).
+  
+Example usage :  
     ```bash
     petractl push  --bucket tf-registry-petra  ../tests/mod1
     ```
-**Example Usage :**
 
 
-
-### petra (server)
-
-- [petra]() - Server to get a terraform module versions / get a signed URL to download a module from a private registry (Google Cloud Storage bucket) configured by the following env vars :
-    - `GCS_BUCKET`: bucket with terraform modules
-    - `SIGNED_URL`: (Optional) Enables the use of a Signed URL for the download api routes. Defaults to false and just forwards a gcs:// link
-
+## Deployment
 #### Deploy Server on Cloud Run
 
 Cloud Run's service account must have the following roles:
@@ -68,7 +61,7 @@ module "my_module" {
 }
 ```
 
-#### Deploy Server on GKE with Workload Identity
+### Deploy Server on GKE with Workload Identity
 
 Activate [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) and the service account must have the following roles:
 
@@ -84,6 +77,16 @@ module "my_module" {
   version = "{VERSION}"
 }
 ```
+
+## Development
+
+Follow these steps if you are OK installing and using Go on your machine.
+
+1. Install [Go](https://golang.org/doc/install).
+1. Install [Visual Studio Code](https://code.visualstudio.com/).
+1. Install [Go extension](https://code.visualstudio.com/docs/languages/go).
+1. Clone and open this repository.
+1. `F1` -> `Go: Install/Update Tools` -> (select all) -> OK.
 
 ## Release
 
@@ -102,12 +105,12 @@ Notable files:
 - [.goreleaser.yml](.goreleaser.yml) - GoReleaser configuration,
 - [go.mod](go.mod) - [Go module definition](https://github.com/golang/go/wiki/Modules#gomod),
 
+## Contributing
+
+Simply create an issue or a pull request.
+
 ## FAQ
 
 ### How can I customize the release or add deb/rpm/snap packages, Homebrew Tap, Scoop App Manifest etc
 
 Take a look at GoReleaser [docs](https://goreleaser.com/customization/) as well as [its repo](https://github.com/goreleaser/goreleaser/) how it is dogfooding its functionality.
-
-## Contributing
-
-Simply create an issue or a pull request.
