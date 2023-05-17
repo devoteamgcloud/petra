@@ -1,4 +1,7 @@
-# Petra (Private Terraform Registry)
+<div align="center">
+  <img src="docs/assets/logo.png" width="250" >
+  <h1>Petra (Private Terraform Registry)</h1>
+</div>
 
 <p>
   <br>
