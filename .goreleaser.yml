@@ -53,10 +53,10 @@ release:
 dockers:
   -
     image_templates:
-    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:latest"
-    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:{{ .Summary }}"
-    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:v{{ .Major }}"
-    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:latest"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:{{ .Summary }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:v{{ .Major }}"
+    - "ghcr.io/devoteamgcloud/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
@@ -69,10 +69,10 @@ dockers:
 
     dockerfile: 'Dockerfile.petractl'
     image_templates:
-    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:latest"
-    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:{{ .Summary }}"
-    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:v{{ .Major }}"
-    - "europe-docker.pkg.dev/dgc-sbx-auto-d67d57e4/main/petractl:v{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/devoteamgcloud/petractl:latest"
+    - "ghcr.io/devoteamgcloud/petractl:{{ .Summary }}"
+    - "ghcr.io/devoteamgcloud/petractl:v{{ .Major }}"
+    - "ghcr.io/devoteamgcloud/petractl:v{{ .Major }}.{{ .Minor }}"
     build_flag_templates:
     - "--pull"
     - "--label=org.opencontainers.image.created={{.Date}}"
