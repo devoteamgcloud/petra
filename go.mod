@@ -5,7 +5,7 @@ go 1.20
 require (
 	cloud.google.com/go/storage v1.30.1
 	github.com/go-chi/chi/v5 v5.0.8
-	google.golang.org/api v0.122.0
+	google.golang.org/api v0.123.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
