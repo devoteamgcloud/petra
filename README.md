@@ -16,7 +16,7 @@ Petra is a lightweight tool that allows to host your own private Terraform regis
 
 Petra is not an official Devoteam product and is provided as-is to the community.
 
-<img alt="Welcome to VHS" src="./petractl.gif" width="600" />
+<img alt="Welcome to VHS" src="./docs/assets//petractl.gif" width="600" />
 
 
 ## Components
