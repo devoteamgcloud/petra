@@ -1,0 +1,49 @@
+site_name: Petra
+site_description: "Private Terraform Registry Manager"
+repo_name: 'devoteamgcloud/petra'
+repo_url: 'https://github.com/devoteamgcloud/petra'
+theme:
+  logo: assets/logo.png
+  features:
+    - search.share
+    - search.highlight
+    - content.code.copy
+
+  font:
+    text: Questrial
+  name: material
+  palette:
+
+  - scheme: default
+    primary: deep purple
+    accent: purple
+    toggle:
+      icon: material/lightbulb
+      name: Switch to dark mode
+  - scheme: slate
+    primary: deep purple
+    accent: purple
+    toggle:
+      icon: material/lightbulb-outline
+      name: Switch to light mode
+
+nav:
+- Home: index.md
+- Quickstart: quickstart.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
