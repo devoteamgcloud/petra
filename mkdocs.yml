@@ -3,6 +3,7 @@ site_description: "Private Terraform Registry Manager"
 repo_name: 'devoteamgcloud/petra'
 repo_url: 'https://github.com/devoteamgcloud/petra'
 theme:
+  favicon: assets/favicon.png
   logo: assets/logo.png
   features:
     - search.share
