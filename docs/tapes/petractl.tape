@@ -1,6 +1,7 @@
 Output petractl.gif
 
 Set FontSize 21
+Set WindowBar "Colorful"
 Set Padding 2
 Set Width 1200
 Set Height 600
@@ -32,7 +33,7 @@ Sleep 2s
 
 Ctrl+L
 
-Type "petractl push --bucket orga-automation-petra-backend-30ba ./tests/mod1"
+Type "petractl push --bucket tf-registry-petra ./tests/mod1"
 Sleep 100ms
 Enter
 Sleep 3s
