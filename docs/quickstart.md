@@ -28,8 +28,8 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 ### 2. Build & Deploy to Cloud Run
 
-Since `ghcr.io` images cannot be used in Cloud Run, you will have to host the docker image on either [Google's Artifact Registry](https://cloud.google.com/artifact-registry/docs/docker/store-docker-container-images) or {--Container Registry--} `(deprecated)`, or DockerHub. 
-With Artifact Registry, you `$IMAGE_PATH` will be look like `[$REGION-]docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/petra:$TAG`
+From `ghcr.io` images cannot be used in Cloud Run, you will have to host the docker image on either [Google's Artifact Registry](https://cloud.google.com/artifact-registry/docs/docker/store-docker-container-images) or {--Container Registry--} `(deprecated)`, or DockerHub. 
+With Artifact Registry, your `$IMAGE_PATH` will looks like `[$REGION-]docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/petra:$TAG`
 
 === "Rebuild and push with Cloud Build"
 
@@ -49,13 +49,13 @@ With Artifact Registry, you `$IMAGE_PATH` will be look like `[$REGION-]docker.pk
     -  $IMAGE_PATH
     ```
 
-Here, the Cloud Run service created does not require authentication as it is not supported by terraform. The access is managed by managing the IAM access to the bucket itself. The Cloud Run is deployed with all traffic allowed, you can also deploy it and allow only internal traffic but you have to make sure that it exposes a HTTPs endpoint or terraform won't pull the modules.
+Here, the created Cloud Run service does not require any authentication as it is not supported by Terraform. Access is managed by directly updating bucket's IAM. The Cloud Run is deployed with all traffic allowed but you can also restrict to internal traffic only, but in this case, you'll have to make sure that a HTTPs endpoint is exposed or Terraform won't be able to pull the modules.
 
 ## Pushing modules
 
 ### 1. Download Petractl
 
-Go to the [latest release page](https://github.com/devoteamgcloud/petra/releases/latest) and one of the following files depending on you OS / CPU architecure :
+Go to the [latest release page](https://github.com/devoteamgcloud/petra/releases/latest) and download one of the following files, depending on you OS / CPU architecure:
 
 === "MacOS"
 
@@ -80,7 +80,7 @@ version: 1.0.3
 
 ### 3. Push the module
 
-Make sure that you have the correct access rights on the `$BUCKET_NAME` bucket to be able to write new files. 
+Make sure that you have the permission to write new files on the bucket `$BUCKET_NAME`. 
 
 ```bash
 petractl push --bucket $BUCKET_NAME ./path/to/module
@@ -88,9 +88,9 @@ petractl push --bucket $BUCKET_NAME ./path/to/module
 
 ## Use your modules in Terraform
 
-Make sure that the user or service account that will be running the terraform init command has access to the petra server and has read access rights to the `$BUCKET_NAME` bucket or that the `SIGNED_URL` option is enabled in order to use the modules.
+In order to use the modules, make sure that the user or Service Account that will be running the `terraform init` command has access to the petra server and read access permission on the bucket `$BUCKET_NAME` (or that the `SIGNED_URL` option is enabled).
 
-Here's an example of Terraform code using a petra hosted module :
+Here is an example of Terraform code that use a petra hosted module:
 
 ```hcl title="main.tf"
 module "mod1" {
@@ -99,4 +99,4 @@ module "mod1" {
 }
 ```
 
-!!! warning "`petra.example.com` has to support HTTPs for terraform to allow the init command"
+!!! warning "`petra.example.com` has to support HTTPS or Terraform's init command won't work"
