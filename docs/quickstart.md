@@ -28,8 +28,8 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 ### 2. Build & Deploy to Cloud Run
 
-From `ghcr.io` images cannot be used in Cloud Run, you will have to host the docker image on either [Google's Artifact Registry](https://cloud.google.com/artifact-registry/docs/docker/store-docker-container-images) or {--Container Registry--} `(deprecated)`, or DockerHub. 
-With Artifact Registry, your `$IMAGE_PATH` will looks like `[$REGION-]docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/petra:$TAG`
+Since `ghcr.io` images cannot be used in Cloud Run, you will have to host the docker image on either [Google's Artifact Registry](https://cloud.google.com/artifact-registry/docs/docker/store-docker-container-images) or {--Container Registry--} `(deprecated)`, or DockerHub. 
+With Artifact Registry, your `$IMAGE_PATH` will look like `[$REGION-]docker.pkg.dev/$PROJECT_ID/$REGISTRY_NAME/petra:$TAG`
 
 === "Rebuild and push with Cloud Build"
 
@@ -55,7 +55,7 @@ Here, the created Cloud Run service does not require any authentication as it is
 
 ### 1. Download Petractl
 
-Go to the [latest release page](https://github.com/devoteamgcloud/petra/releases/latest) and download one of the following files, depending on you OS / CPU architecure:
+Go to the [latest release page](https://github.com/devoteamgcloud/petra/releases/latest) and download one of the following files, depending on you OS / CPU architecture:
 
 === "MacOS"
 
@@ -90,7 +90,7 @@ petractl push --bucket $BUCKET_NAME ./path/to/module
 
 In order to use the modules, make sure that the user or Service Account that will be running the `terraform init` command has access to the petra server and read access permission on the bucket `$BUCKET_NAME` (or that the `SIGNED_URL` option is enabled).
 
-Here is an example of Terraform code that use a petra hosted module:
+Here is an example of Terraform code that uses a petra hosted module:
 
 ```hcl title="main.tf"
 module "mod1" {
