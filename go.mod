@@ -5,7 +5,7 @@ go 1.20
 require (
 	cloud.google.com/go/storage v1.30.1
 	github.com/go-chi/chi/v5 v5.0.8
-	google.golang.org/api v0.126.0
+	google.golang.org/api v0.128.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -28,7 +28,7 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.2.4 // indirect
 	github.com/googleapis/gax-go/v2 v2.10.0 // indirect
 	github.com/spf13/cobra v1.7.0
 	go.opencensus.io v0.24.0 // indirect
