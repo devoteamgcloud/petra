@@ -5,7 +5,7 @@ go 1.20
 require (
 	cloud.google.com/go/storage v1.32.0
 	github.com/go-chi/chi/v5 v5.0.10
-	google.golang.org/api v0.136.0
+	google.golang.org/api v0.138.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -13,7 +13,7 @@ require (
 	cloud.google.com/go/compute v1.23.0 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/iam v1.1.1 // indirect
-	github.com/google/s2a-go v0.1.4 // indirect
+	github.com/google/s2a-go v0.1.5 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/crypto v0.12.0 // indirect
