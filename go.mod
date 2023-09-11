@@ -3,7 +3,7 @@ module github.com/devoteamgcloud/petra
 go 1.20
 
 require (
-	cloud.google.com/go/storage v1.32.0
+	cloud.google.com/go/storage v1.33.0
 	github.com/go-chi/chi/v5 v5.0.10
 	google.golang.org/api v0.138.0
 	gopkg.in/yaml.v3 v3.0.1
